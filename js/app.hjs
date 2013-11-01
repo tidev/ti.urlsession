@@ -1,0 +1,129 @@
+@import("Foundation");
+@import("UIKit");
+
+function handleDownloadCompleted(params){
+	//TODO : fire event from here to Ti.Current
+	// how to hook into  -(void)fireEvent:(NSString*)type withObject:(id)obj;
+};
+function handleDownloadProgress(params){
+
+};
+function handleDownloadResumed(params){};
+function handleSessionError(params){};
+function handleSessionCompleted(params){};
+function handleUploadProgress(params){};
+function handleUploadCompleted(params){};
+
+@class ('urlSessionDlgt', NSObject, [ NSURLSessionDelegate, NSURLSessionTaskDelegate, NSURLSessionDownloadDelegate], [
+		{
+			name: 'URLSession',
+			returnType: 'void',
+			arguments: [
+					{ type: 'NSURLSession', name: 'URLSession' },
+					{ type: 'NSURLSessionDownloadTask', name: 'downloadTask' },
+					{ type: 'NSURL', name: 'didFinishDownloadingToURL'}
+			],
+			action: handleDownloadCompleted
+		
+		},
+		{
+			name: 'URLSession',
+			returnType: 'void',
+			arguments: [
+					{ type: 'NSURLSession', name: 'URLSession' },
+					{ type: 'NSURLSessionDownloadTask', name: 'downloadTask' },
+					{ type: 'int64_t', name: 'didWriteData'},
+					{ type: 'int64_t', name: 'totalBytesWritten'},
+					{ type: 'int64_t', name: 'totalBytesExpectedToWrite'}
+			],
+			action: handleDownloadProgress
+		
+		},
+		{
+			name: 'URLSession',
+			returnType: 'void',
+			arguments: [
+					{ type: 'NSURLSession', name: 'URLSession' },
+					{ type: 'NSURLSessionDownloadTask', name: 'downloadTask' },
+					{ type: 'int64_t', name: 'didResumeAtOffset'},
+					{ type: 'int64_t', name: 'expectedTotalBytes'}
+			],
+			action: handleDownloadResumed
+		
+		},
+		{
+			name: 'URLSession',
+			returnType: 'void',
+			arguments: [
+					{ type: 'NSURLSession', name: 'URLSession' },
+					{ type: 'NSURLSessionTask', name: 'task' },
+					{ type: 'NSError', name: 'didCompleteWithError'}
+			],
+			action: handleSessionError
+		},
+		{
+			name: 'URLSessionDidFinishEventsForBackgroundURLSession',
+			returnType: 'void',
+			arguments: [
+					{ type: 'NSURLSession', name: 'URLSessionDidFinishEventsForBackgroundURLSession' },
+			],
+			action: handleSessionCompleted
+		},
+		{
+			name: 'URLSession',
+			returnType: 'void',
+			arguments: [
+					{ type: 'NSURLSession', name: 'URLSession' },
+					{ type: 'NSURLSessionTask', name: 'task' },
+					{ type: 'int64_t', name: 'didSendBodyData'},
+					{ type: 'int64_t', name: 'totalBytesSent'},
+					{ type: 'int64_t', name: 'totalBytesExpectedToSend'}
+			],
+			action: handleUploadProgress
+		}
+]);	
+
+exports.createURLSession = function (identifier) {
+	if	(identifier.length() != 0) {
+		var sessionConfig = NSURLSessionConfiguration.backgroundSessionConfiguration(identifier);
+		var sessiondelegate = new urlSessionDlgt();
+		var unused;
+		var session = NSURLSession.sessionWithConfiguration(sessionConfig, sessiondelegate, unused );
+		return session;
+	} else {
+		console.log("[WARN] Need to specify a proper identifier to create a URLSession.");
+	}
+}
+
+exports.backgroundDownloadTaskWithURL = function(session, url) {
+	if (session != null) {
+		var taskurl = NSURL.URLWithString(url);
+		var task = session.downloadTaskWithURL(taskurl);
+		task.resume();
+	} else {
+		console.log("[WARN] Need to specify a proper URLSession to start a background download task");
+	}
+}
+
+exports.backgroundUploadTaskFromData = function(session, url, data) {
+	if (session != null) {
+		var taskurl = NSURL.URLWithString(url);
+		var requestUrl = NSURLRequest.requestWithURL(taskurl);
+		var task = session.uploadTaskWithRequest(requestUrl,data);
+		task.resume();
+	} else {
+		console.log("[WARN] Need to specify a proper URLSession to start a background upload task");
+	}
+}
+
+exports.backgroundUploadTaskFromFile = function(session, url, filepath) {
+	if (session != null) {
+		var taskurl = NSURL.URLWithString(url);
+		var requestUrl = NSURLRequest.requestWithURL(taskurl);
+		var file = NSURL.URLWithString(filepath);
+		var task = session.uploadTaskWithRequest(requestUrl,file);
+		task.resume();
+	} else {
+		console.log("[WARN] Need to specify a proper URLSession to start a background upload task");
+	}
+}
