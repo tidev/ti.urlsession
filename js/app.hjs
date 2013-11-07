@@ -1,129 +1,90 @@
 @import("Foundation");
 @import("UIKit");
 
-function handleDownloadCompleted(params){
-	//TODO : fire event from here to Ti.Current
-	// how to hook into  -(void)fireEvent:(NSString*)type withObject:(id)obj;
-};
-function handleDownloadProgress(params){
-
-};
-function handleDownloadResumed(params){};
-function handleSessionError(params){};
-function handleSessionCompleted(params){};
-function handleUploadProgress(params){};
-function handleUploadCompleted(params){};
-
-@class ('urlSessionDlgt', NSObject, [ NSURLSessionDelegate, NSURLSessionTaskDelegate, NSURLSessionDownloadDelegate], [
-		{
-			name: 'URLSession',
-			returnType: 'void',
-			arguments: [
-					{ type: 'NSURLSession', name: 'URLSession' },
-					{ type: 'NSURLSessionDownloadTask', name: 'downloadTask' },
-					{ type: 'NSURL', name: 'didFinishDownloadingToURL'}
-			],
-			action: handleDownloadCompleted
-		
-		},
-		{
-			name: 'URLSession',
-			returnType: 'void',
-			arguments: [
-					{ type: 'NSURLSession', name: 'URLSession' },
-					{ type: 'NSURLSessionDownloadTask', name: 'downloadTask' },
-					{ type: 'int64_t', name: 'didWriteData'},
-					{ type: 'int64_t', name: 'totalBytesWritten'},
-					{ type: 'int64_t', name: 'totalBytesExpectedToWrite'}
-			],
-			action: handleDownloadProgress
-		
-		},
-		{
-			name: 'URLSession',
-			returnType: 'void',
-			arguments: [
-					{ type: 'NSURLSession', name: 'URLSession' },
-					{ type: 'NSURLSessionDownloadTask', name: 'downloadTask' },
-					{ type: 'int64_t', name: 'didResumeAtOffset'},
-					{ type: 'int64_t', name: 'expectedTotalBytes'}
-			],
-			action: handleDownloadResumed
-		
-		},
-		{
-			name: 'URLSession',
-			returnType: 'void',
-			arguments: [
-					{ type: 'NSURLSession', name: 'URLSession' },
-					{ type: 'NSURLSessionTask', name: 'task' },
-					{ type: 'NSError', name: 'didCompleteWithError'}
-			],
-			action: handleSessionError
-		},
-		{
-			name: 'URLSessionDidFinishEventsForBackgroundURLSession',
-			returnType: 'void',
-			arguments: [
-					{ type: 'NSURLSession', name: 'URLSessionDidFinishEventsForBackgroundURLSession' },
-			],
-			action: handleSessionCompleted
-		},
-		{
-			name: 'URLSession',
-			returnType: 'void',
-			arguments: [
-					{ type: 'NSURLSession', name: 'URLSession' },
-					{ type: 'NSURLSessionTask', name: 'task' },
-					{ type: 'int64_t', name: 'didSendBodyData'},
-					{ type: 'int64_t', name: 'totalBytesSent'},
-					{ type: 'int64_t', name: 'totalBytesExpectedToSend'}
-			],
-			action: handleUploadProgress
-		}
-]);	
-
-exports.createURLSession = function (identifier) {
-	if	(identifier.length() != 0) {
-		var sessionConfig = NSURLSessionConfiguration.backgroundSessionConfiguration(identifier);
-		var sessiondelegate = new urlSessionDlgt();
-		var unused;
-		var session = NSURLSession.sessionWithConfiguration(sessionConfig, sessiondelegate, unused );
-		return session;
+exports.createURLSessionBackgroundConfiguration = function (identifier) {
+	if (identifier.length != 0) {
+		return NSURLSessionConfiguration.backgroundSessionConfiguration(identifier);
 	} else {
-		console.log("[WARN] Need to specify a proper identifier to create a URLSession.");
+		console.log("[ERROR] Need to specify a proper identifier to create a URLSessionConfiguration.");
 	}
 }
+
+exports.additionalHeaderForConfig(config, headers) {
+	if (config != null) {
+		if (header != null) {
+			config.HTTPAdditionalHeaders = headers;
+		} else {
+			console.log("[ERROR] headers passed in are empty.");
+		}
+		return config;
+	} else {
+		console.log("[ERROR] Session Configuration is null");
+		return config;
+	}
+}
+
+exports.createURLSession = function (sessionConfig) {
+	if	(sessionConfig != null) {
+		var sessiondelegate = UIApplication.sharedApplication().delegate;
+		return NSURLSession.sessionWithConfiguration(sessionConfig, sessiondelegate, undefined);
+	} else {
+		console.log("[ERROR] Cannot create URLSession, please provide a proper session configuration object. ");
+	}
+}
+
+exports.createURLSharedSession = function () {
+	return NSURLSession.sharedsession;
+}
+
+exports.finishTasksAndInvalidate = function(session) {
+	session.finishTasksAndInvalidate();
+}
+
+exports.invalidateAndCancel = function (session) {
+	session.invalidateAndCancel();
+}
+
 
 exports.backgroundDownloadTaskWithURL = function(session, url) {
 	if (session != null) {
-		var taskurl = NSURL.URLWithString(url);
-		var task = session.downloadTaskWithURL(taskurl);
-		task.resume();
+		if (url.length != 0) {
+			var taskurl = NSURL.URLWithString(url); 
+			var task = session.downloadTaskWithURL(taskurl);
+			task.resume();
+			return task.taskIdentifier;
+		} else {
+			console.log("[ERROR] The specified url for background download task is empty. Please provide a proper url");
+			return null;
+		}
 	} else {
-		console.log("[WARN] Need to specify a proper URLSession to start a background download task");
+		console.log("[ERROR] Need to specify a proper URLSession to start a background download task");
+		return null;
 	}
 }
 
-exports.backgroundUploadTaskFromData = function(session, url, data) {
+exports.backgroundUploadTaskFromData = function(session, uploadurl, data) {
 	if (session != null) {
-		var taskurl = NSURL.URLWithString(url);
+		var taskurl = NSURL.URLWithString(uploadurl);
 		var requestUrl = NSURLRequest.requestWithURL(taskurl);
 		var task = session.uploadTaskWithRequest(requestUrl,data);
 		task.resume();
+		return task.taskIdentifier;
 	} else {
 		console.log("[WARN] Need to specify a proper URLSession to start a background upload task");
+		return null;
 	}
 }
 
-exports.backgroundUploadTaskFromFile = function(session, url, filepath) {
+exports.backgroundUploadTaskFromFile = function(session, uploadurl, filepath) {
 	if (session != null) {
-		var taskurl = NSURL.URLWithString(url);
+		var taskurl = NSURL.URLWithString(uploadurl);
 		var requestUrl = NSURLRequest.requestWithURL(taskurl);
 		var file = NSURL.URLWithString(filepath);
 		var task = session.uploadTaskWithRequest(requestUrl,file);
 		task.resume();
+		return task.taskIdentifier;
 	} else {
 		console.log("[WARN] Need to specify a proper URLSession to start a background upload task");
+		return null;
 	}
 }
