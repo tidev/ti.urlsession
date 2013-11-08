@@ -9,41 +9,30 @@ exports.createURLSessionBackgroundConfiguration = function (identifier) {
 	}
 }
 
-exports.additionalHeaderForConfig(config, headers) {
-	if (config != null) {
-		if (header != null) {
-			config.HTTPAdditionalHeaders = headers;
-		} else {
-			console.log("[ERROR] headers passed in are empty.");
-		}
-		return config;
-	} else {
-		console.log("[ERROR] Session Configuration is null");
-		return config;
-	}
-}
-
 exports.createURLSession = function (sessionConfig) {
 	if	(sessionConfig != null) {
-		var sessiondelegate = UIApplication.sharedApplication().delegate;
-		return NSURLSession.sessionWithConfiguration(sessionConfig, sessiondelegate, undefined);
+		var unused, sessiondelegate = UIApplication.sharedApplication().delegate;
+		return NSURLSession.sessionWithConfiguration(sessionConfig, sessiondelegate, unused);
 	} else {
 		console.log("[ERROR] Cannot create URLSession, please provide a proper session configuration object. ");
 	}
 }
 
-exports.createURLSharedSession = function () {
-	return NSURLSession.sharedsession;
-}
-
 exports.finishTasksAndInvalidate = function(session) {
-	session.finishTasksAndInvalidate();
+	if (session != null) {
+		session.finishTasksAndInvalidate();
+	} else {
+		console.log("[ERROR] Provided session is empty. Provide a proper session to invalidate");
+	}
 }
 
 exports.invalidateAndCancel = function (session) {
-	session.invalidateAndCancel();
+	if (session != null) {
+		session.invalidateAndCancel();
+	} else {
+		console.log("[ERROR] Provided session is empty. Provide a proper session to invalidate");
+	}
 }
-
 
 exports.backgroundDownloadTaskWithURL = function(session, url) {
 	if (session != null) {
@@ -58,33 +47,6 @@ exports.backgroundDownloadTaskWithURL = function(session, url) {
 		}
 	} else {
 		console.log("[ERROR] Need to specify a proper URLSession to start a background download task");
-		return null;
-	}
-}
-
-exports.backgroundUploadTaskFromData = function(session, uploadurl, data) {
-	if (session != null) {
-		var taskurl = NSURL.URLWithString(uploadurl);
-		var requestUrl = NSURLRequest.requestWithURL(taskurl);
-		var task = session.uploadTaskWithRequest(requestUrl,data);
-		task.resume();
-		return task.taskIdentifier;
-	} else {
-		console.log("[WARN] Need to specify a proper URLSession to start a background upload task");
-		return null;
-	}
-}
-
-exports.backgroundUploadTaskFromFile = function(session, uploadurl, filepath) {
-	if (session != null) {
-		var taskurl = NSURL.URLWithString(uploadurl);
-		var requestUrl = NSURLRequest.requestWithURL(taskurl);
-		var file = NSURL.URLWithString(filepath);
-		var task = session.uploadTaskWithRequest(requestUrl,file);
-		task.resume();
-		return task.taskIdentifier;
-	} else {
-		console.log("[WARN] Need to specify a proper URLSession to start a background upload task");
 		return null;
 	}
 }

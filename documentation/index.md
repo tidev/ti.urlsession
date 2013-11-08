@@ -2,7 +2,7 @@
 
 ## Description
 
-TODO: Enter your module description here
+Creates a very thin wrapper around NSURLSession for Backgrounding Feature in iOS.
 
 ## Accessing the urlSession Module
 
@@ -17,7 +17,7 @@ The urlSession variable is a reference to the Module object.
 TODO: If your module has an API, you should document
 the reference here.
 
-### ___PROJECTNAMEASIDENTIFIER__.function
+### urlSession.function
 
 TODO: This is an example of a module function.
 
