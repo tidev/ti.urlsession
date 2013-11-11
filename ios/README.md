@@ -3,6 +3,8 @@ Appcelerator Titanium iPhone Module Project
 
 This module is the first attempt at making a module using hyperloop for the current version of Titanium. 
 
+## This module is available only for iOS 7 and above.
+
 COMPILING THE MODULE
 --------------------
 
