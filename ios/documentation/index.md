@@ -8,7 +8,7 @@ Creates a very thin wrapper around NSURLSession for along with the Backgrounding
 
 To access this module from JavaScript, you would do the following:
 
-	var urlSession = require("urlSession");
+	var urlSession = require("com.appcelerator.urlSession");
 
 The urlSession variable is a reference to the Module object.	
 

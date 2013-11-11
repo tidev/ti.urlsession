@@ -1,6 +1,6 @@
 //Sample test app 
 
-var urlsessionModule = require("urlSession");
+var urlsessionModule = require("com.appcelerator.urlSession");
 var session;
 var keyWindow = Ti.UI.createWindow({backgroundColor:"white"});
 var ind=Titanium.UI.createProgressBar({

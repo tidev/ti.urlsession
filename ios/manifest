@@ -12,7 +12,7 @@ copyright: Copyright (c) 2009-2013 by Appcelerator, Inc.
 
 # these should not be edited
 name: UrlSession
-moduleid: urlSession
+moduleid: com.appcelerator.urlSession
 guid: cbf3cdea-b7e8-4375-bdfb-70fb9307054d
 platform: iphone
 minsdk: 3.2.0.GA

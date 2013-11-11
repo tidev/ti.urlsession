@@ -67,6 +67,6 @@ To use your module in code, you will need to require it.
 
 For example,
 
-	var my_module = require('urlSession');
+	var my_module = require('com.appcelerator.urlSession');
 	my_module.foo();
 
