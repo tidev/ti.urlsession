@@ -2,7 +2,7 @@
 # this is your module manifest and used by Titanium
 # during compilation, packaging, distribution, etc.
 #
-version: 1.0
+version: 1.0.0
 apiversion: 2
 description: Allows access to NSURLSession for background network sessions.
 author: srahim
@@ -11,8 +11,8 @@ copyright: Copyright (c) 2009-2013 by Appcelerator, Inc.
 
 
 # these should not be edited
-name: urlSession
-moduleid: com.appcelerator.urlSession
+name: UrlSession
+moduleid: urlSession
 guid: cbf3cdea-b7e8-4375-bdfb-70fb9307054d
 platform: iphone
-minsdk: 3.1.3.GA
+minsdk: 3.2.0.GA
