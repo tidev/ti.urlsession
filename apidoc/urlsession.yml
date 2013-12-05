@@ -1,0 +1,106 @@
+---
+name: Modules.URLSession
+summary: Wrapper to support iOS's NSURLSession class for background downloads.
+description: |
+    These APIs are supported on iOS 7 and later.
+
+    The URL session module (`com.appcelerator.urlSession`) provides the application the ability to
+    download large content via HTTP while the application is in the background. With this module, you can
+
+      1. Create a URL session and a background download task.
+      2. Monitor events to check the progress of the download and session.
+      3. Cancel downloads and invalidate sessions.
+
+    URL session events are monitored through the following iOS application-level events:
+
+      * <Titanium.App.iOS.backgroundtransfer>
+      * <Titanium.App.iOS.downloadprogress>
+      * <Titanium.App.iOS.downloadcompleted>
+      * <Titanium.App.iOS.sessioncompleted>
+      * <Titanium.App.iOS.sessioneventscompleted>
+
+    These events are monitored as application-level events by using the `addEventListener` method with the
+    Titanium.App.iOS namespace.  
+
+    For more information on getting started, refer to the
+    [iOS Background Services guide](http://docs.appcelerator.com/titanium/latest/#!/guide/iOS_Background_Services).
+
+extends: Titanium.Module
+since: "3.2.0"
+osver: {ios: {min: "7.0"}}
+platforms: [iphone, ipad]
+excludes:
+    methods: [addEventListener, fireEvent, removeEventListener]
+    properties: [bubbleParent]
+
+methods:
+  - name: createURLSessionBackgroundConfiguration
+    summary: |
+        Creates a preconfigured session configuration object that can be used to create a URL session for
+        performing a background download task.
+    parameters:
+      - name: indentifier
+        summary: Arbitrary string used to identify the session in the events.
+        type: String
+    returns:
+        summary: Configuration object to pass to the <Modules.URLSession.createURLSession> method.
+        type: Object
+
+  - name: createURLSession
+    summary: Creates a session with the specified session configuration.
+    description: |
+        If the session configuration was created with the identifier of a existing session,
+        then this function would return the pre-existing session.
+
+        The session object keeps a strong reference until your app explicitly invalidates the
+        session. If you do not invalidate the session by calling the `invalidateAndCancel` or
+         `finishTasksAndInvalidate` method, your app leaks memory.
+    parameters:
+      - name: sessionConfiguration
+        summary: Session configuration object created with the <Modules.URLSession.createURLSessionBackgroundConfiguration>
+        type: Object 
+    returns:
+        summary: URL session object.
+        type: Object
+
+  - name: finishTasksAndInvalidate
+    summary: Invalidates the given session object, allowing any outstanding tasks to finish.
+    description: |
+        This method returns immediately without waiting for tasks to finish. Once a session is invalidated,
+        new tasks cannot be created in the session, but existing tasks continue until completion. Once
+        invalidated, references to the events and callback objects are broken. Session objects cannot be
+        reused. To cancel all outstanding tasks, call `invalidateAndCancel` instead.
+    parameters:
+      - name: session
+        summary: URL session object.
+        type: Object
+
+  - name: invalidateAndCancel
+    summary: Cancels all outstanding tasks and then invalidates the session object.
+    description: |
+        Once invalidated, references to the events and callback objects are broken. Session objects cannot
+        be reused. To allow outstanding tasks to run until completion, call
+        `finishTasksAndInvalidate` instead.
+    parameters:
+      - name: session
+        summary: URL session object.
+        type: Object
+
+  - name: backgroundDownloadTaskWithURL
+    summary: |
+        Creates a download task for the specified URL, within the provided session object and saves the
+        results to a file.
+    description: |
+        Once this function is called, the download starts automatically. The progress of
+        the download can be monitored by listening to the `downloadprogress`, `downloadcompleted`,
+        `sessioneventscompleted` and `sessioncompleted` events.
+    parameters:
+      - name: session
+        summary: URL session object.
+        type: Object
+      - name: url
+        summary: URL to download content from.
+        type: String
+    returns:
+        summary: Task's identifier number.
+        type: String    
