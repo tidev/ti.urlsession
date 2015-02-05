@@ -2,13 +2,13 @@
 # this is your module manifest and used by Titanium
 # during compilation, packaging, distribution, etc.
 #
-version: 1.1.0
+version: 1.1.1
 apiversion: 2
 architectures: i386 x86_64 armv7 arm64
 description: Allows access to NSURLSession for background network sessions.
 author: srahim
 license: Apache Public License v2
-copyright: Copyright (c) 2009-2013 by Appcelerator, Inc.
+copyright: Copyright (c) 2009-2015 by Appcelerator, Inc.
 
 
 # these should not be edited

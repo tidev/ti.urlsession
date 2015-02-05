@@ -1920,7 +1920,7 @@ JSValueRef backgroundSessionConfigurationForNSURLSessionConfigurationConstructor
     {
     	bool identifier$0$free = false;
     NSString * identifier$0 = HyperloopJSValueRefToNSString(ctx,arguments[0],exception,&identifier$0$free);
-    	NSURLSessionConfiguration * result$ = [NSURLSessionConfiguration backgroundSessionConfiguration:identifier$0];
+    	NSURLSessionConfiguration * result$ = [NSURLSessionConfiguration backgroundSessionConfigurationWithIdentifier:identifier$0];
     	JSValueRef result = HyperloopNSURLSessionConfigurationToJSValueRef(ctx, result$);
     	if (identifier$0$free)
     {
