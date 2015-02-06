@@ -9,8 +9,22 @@ install:
     - curl -o install.sh https://raw.githubusercontent.com/appcelerator-modules/ci/master/travis/install.sh
     - source install.sh
 script: 
+	- ./build.sh
     - curl -o script.sh https://raw.githubusercontent.com/appcelerator-modules/ci/master/travis/script.sh
     - source script.sh
-after_success: # and this only on success
-    - curl -o deploy.sh https://raw.githubusercontent.com/appcelerator-modules/ci/master/travis/deploy.sh
-    - source deploy.sh
+       - mkdir -p "$MODULE_ROOT/s3"
+    - NOW=$(date +"%Y%m%d%H%M")
+    - echo "cp -p \"${MODULE_ROOT}/build/${MODULE_NAME}-iphone-${MODULE_VERSION}.zip\" \"${MODULE_ROOT}/s3/${MODULE_NAME}-iphone-${MODULE_VERSION}-${TRAVIS_BRANCH}-${NOW}.zip\""
+    - cp -p "${MODULE_ROOT}/build/${MODULE_NAME}-iphone-${MODULE_VERSION}.zip" "${MODULE_ROOT}/s3/${MODULE_NAME}-iphone-${MODULE_VERSION}-${TRAVIS_BRANCH}-${NOW}.zip"
+deploy:
+  provider: s3
+  access_key_id: AKIAJEU4ONO4EVCH6DRA
+  secret_access_key:
+    secure: DjoNYXNIjuURlV+tIXBJtaL6sZGI46OgT2IkYfk/iETBTz6QUUQnPcvkMjcl63TjVPKlcxwDswAy/iu7+vSg/VTZLk22PTGksPLJf/fV0BNnqlDWpBh8SIcdxoly0Kmwmf41KLG9lI/8IEi1zOL/x/qbA1nKN72RgiXmLISgFjM=
+  upload-dir: modules/ti.urlsession
+  bucket: builds.appcelerator.com
+  local-dir: $TRAVIS_BUILD_DIR/s3/
+  skip_cleanup: true
+  on:
+    repo: appcelerator-modules/ti.urlsession
+    branch: master
