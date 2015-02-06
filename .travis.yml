@@ -9,7 +9,7 @@ install:
     - curl -o install.sh https://raw.githubusercontent.com/appcelerator-modules/ci/master/travis/install.sh
     - source install.sh
 script: 
-	- ./build.sh
+    - ./build.sh
     - curl -o script.sh https://raw.githubusercontent.com/appcelerator-modules/ci/master/travis/script.sh
     - source script.sh
        - mkdir -p "$MODULE_ROOT/s3"
