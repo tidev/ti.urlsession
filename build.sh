@@ -2,7 +2,7 @@
 
 # urlSession iOS module.
 #
-# Copyright (c) 2014 by Appcelerator, Inc. All Rights Reserved.
+# Copyright (c) 2014-2015 by Appcelerator, Inc. All Rights Reserved.
 # Licensed under the terms of the Apache Public License.
 # Please see the LICENSE included with this distribution for details.
 
@@ -13,7 +13,7 @@
 
 declare -r build_dir="build"
 declare -r module_name="com.appcelerator.urlSession"
-declare -r module_version="1.1.0"
+declare -r module_version="1.1.1"
 declare -r library_name="lib${module_name}.a"
 declare -r library_path="ios/xcode/build/${library_name}"
 declare -r module_package_path="${build_dir}/modules/iphone/${module_name}/${module_version}"

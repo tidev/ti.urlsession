@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2013 by Appcelerator, Inc. All Rights Reserved.
+ * Copyright (c) 2013-2015 by Appcelerator, Inc. All Rights Reserved.
  * Licensed under the terms of the Apache Public License
  * Please see the LICENSE included with this distribution for details.
  *
@@ -1920,7 +1920,16 @@ JSValueRef backgroundSessionConfigurationForNSURLSessionConfigurationConstructor
     {
     	bool identifier$0$free = false;
     NSString * identifier$0 = HyperloopJSValueRefToNSString(ctx,arguments[0],exception,&identifier$0$free);
-    	NSURLSessionConfiguration * result$ = [NSURLSessionConfiguration backgroundSessionConfiguration:identifier$0];
+        NSURLSessionConfiguration * result$;
+        //check if >iOS8
+    if ([UIView instancesRespondToSelector:@selector(layoutMarginsDidChange)])
+    {
+        result$ = [NSURLSessionConfiguration backgroundSessionConfigurationWithIdentifier:identifier$0];
+    }
+    else 
+    {
+    	result$ = [NSURLSessionConfiguration backgroundSessionConfiguration:identifier$0];
+    }
     	JSValueRef result = HyperloopNSURLSessionConfigurationToJSValueRef(ctx, result$);
     	if (identifier$0$free)
     {
