@@ -215,8 +215,8 @@ def verify_build_arch(manifest, config):
 		die('')
 
 def package_module(manifest,mf,config):
-	name = manifest['name'].lower()
-	moduleid = manifest['moduleid'].lower()
+	name = manifest['name']
+	moduleid = manifest['moduleid']
 	version = manifest['version']
 	modulezip = '%s-iphone-%s.zip' % (moduleid,version)
 	if os.path.exists(modulezip): os.remove(modulezip)
