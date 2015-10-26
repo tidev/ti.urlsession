@@ -12,11 +12,6 @@ To access this module from JavaScript, you would do the following:
 
 The urlSession variable is a reference to the Module object.	
 
-## Reference
-
-TODO: If your module has an API, you should document
-the reference here.
-
 ## Functions
 
 ### createURLSessionBackgroundConfiguration(string)
@@ -80,7 +75,7 @@ Returns the new created task's identifier number.
 
 ### downloadprogress
 
-Periodically informs the user about the download’s progress.
+Periodically informs the user about the download's progress.
 
 <strong>Important</strong>This event is exposed inside Ti.App.iOS Proxy.
 usage : 
@@ -96,6 +91,7 @@ The following event information will be provided:
 ### downloadcompleted
 
 Informs the app that a download task has finished downloading.
+
 <strong>Important</strong>This event is exposed inside Ti.App.iOS Proxy.
 usage : 
 	Ti.App.iOS.addEventListener('downloadcompleted', function(e){...});
@@ -137,7 +133,7 @@ See Sample
 
 ## Author
 
-Sabil Rahim
+Hans Knoechel / Sabil Rahim
 
 ## Module History
 
@@ -148,5 +144,5 @@ View the [change log](changelog.html) for this module.
 Please direct all questions, feedback, and concerns to [info@appcelerator.com](mailto:info@appcelerator.com?subject=iOS%20urlSesson%20Module). 
 
 ## License
-Copyright(c) 2010-2013 by Appcelerator, Inc. All Rights Reserved. Please see the LICENSE 
+Copyright(c) 2010-2015 by Appcelerator, Inc. All Rights Reserved. Please see the LICENSE 
 file included in the distribution for further details.
