@@ -8,14 +8,15 @@ install:
     - cd $MODULE_ROOT
     - curl -o install.sh https://raw.githubusercontent.com/appcelerator-modules/ci/master/travis/install.sh
     - source install.sh
-script: 
+script:
+    - cd ios/ti.urlsession 
     - ./build.sh
     - curl -o script.sh https://raw.githubusercontent.com/appcelerator-modules/ci/master/travis/script.sh
     - source script.sh
        - mkdir -p "$MODULE_ROOT/s3"
     - NOW=$(date +"%Y%m%d%H%M")
-    - echo "cp -p \"${MODULE_ROOT}/build/${MODULE_NAME}-iphone-${MODULE_VERSION}.zip\" \"${MODULE_ROOT}/s3/${MODULE_NAME}-iphone-${MODULE_VERSION}-${TRAVIS_BRANCH}-${NOW}.zip\""
-    - cp -p "${MODULE_ROOT}/build/${MODULE_NAME}-iphone-${MODULE_VERSION}.zip" "${MODULE_ROOT}/s3/${MODULE_NAME}-iphone-${MODULE_VERSION}-${TRAVIS_BRANCH}-${NOW}.zip"
+    - echo "cp -p \"${MODULE_NAME}-iphone-${MODULE_VERSION}.zip\" \"${MODULE_ROOT}/s3/${MODULE_NAME}-iphone-${MODULE_VERSION}-${TRAVIS_BRANCH}-${NOW}.zip\""
+    - cp -p "${MODULE_NAME}-iphone-${MODULE_VERSION}.zip" "${MODULE_ROOT}/s3/${MODULE_NAME}-iphone-${MODULE_VERSION}-${TRAVIS_BRANCH}-${NOW}.zip"
 deploy:
   provider: s3
   access_key_id: AKIAJEU4ONO4EVCH6DRA
