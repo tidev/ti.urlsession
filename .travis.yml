@@ -1,4 +1,5 @@
 language: objective-c
+osx_image: xcode7.1
 env:
  global:
     - "MODULE_NAME=ti.urlsession" 
@@ -7,13 +8,11 @@ before_install:
 install:
     - cd $MODULE_ROOT
     - curl -o install.sh https://raw.githubusercontent.com/appcelerator-modules/ci/master/travis/install.sh
-    - source install.sh
+    - source install.sh -s "--branch 5_1_X"
 script:
-    - cd ios/ti.urlsession 
-    - ./build.sh
-    - curl -o script.sh https://raw.githubusercontent.com/appcelerator-modules/ci/master/travis/script.sh
+    - curl -o script.sh https://raw.githubusercontent.com/appcelerator-modules/ci/master/travis/script.sh    
     - source script.sh
-       - mkdir -p "$MODULE_ROOT/s3"
+    - mkdir -p "$MODULE_ROOT/s3"
     - NOW=$(date +"%Y%m%d%H%M")
     - echo "cp -p \"${MODULE_NAME}-iphone-${MODULE_VERSION}.zip\" \"${MODULE_ROOT}/s3/${MODULE_NAME}-iphone-${MODULE_VERSION}-${TRAVIS_BRANCH}-${NOW}.zip\""
     - cp -p "${MODULE_NAME}-iphone-${MODULE_VERSION}.zip" "${MODULE_ROOT}/s3/${MODULE_NAME}-iphone-${MODULE_VERSION}-${TRAVIS_BRANCH}-${NOW}.zip"
