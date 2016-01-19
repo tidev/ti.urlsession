@@ -6,13 +6,13 @@ version: 2.0.0
 apiversion: 2
 architectures: armv7 arm64 i386 x86_64
 description: ti.urlsession
-author: Your Name
-license: Specify your license
-copyright: Copyright (c) 2015 by Your Company
+author: Ng Chee Kiat
+license: Apache
+copyright: Copyright (c) 2015-2016 by Appcelerator Inc.
 
 # these should not be edited
 name: ti.urlsession
 moduleid: com.appcelerator.urlSession
 guid: 276644d1-41e7-4c67-88a3-55d4fbfa0f24
 platform: iphone
-minsdk: 3.5.0.GA
+minsdk: 5.0.0
