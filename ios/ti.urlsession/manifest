@@ -15,4 +15,4 @@ name: ti.urlsession
 moduleid: com.appcelerator.urlSession
 guid: 276644d1-41e7-4c67-88a3-55d4fbfa0f24
 platform: iphone
-minsdk: 3.5.0.GA
+minsdk: 5.0.0
