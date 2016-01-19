@@ -10,7 +10,8 @@ install:
     - curl -o install.sh https://raw.githubusercontent.com/appcelerator-modules/ci/master/travis/install.sh
     - source install.sh -s "--branch 5_1_X"
 script:
-    - cd ios/ti.urlsession 
+    - cd ios/ti.urlsession
+    - ./build.py
     - curl -o script.sh https://raw.githubusercontent.com/appcelerator-modules/ci/master/travis/script.sh    
     - source script.sh
     - mkdir -p "$MODULE_ROOT/s3"
