@@ -10,7 +10,7 @@ install:
     - source install.sh
 script:
     - cd ios/ti.urlsession 
-    - ./build.sh
+    - ./build.py
     - curl -o script.sh https://raw.githubusercontent.com/appcelerator-modules/ci/master/travis/script.sh
     - source script.sh
        - mkdir -p "$MODULE_ROOT/s3"
