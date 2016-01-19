@@ -13,7 +13,7 @@ script:
     - cd ios/ti.urlsession 
     - curl -o script.sh https://raw.githubusercontent.com/appcelerator-modules/ci/master/travis/script.sh    
     - source script.sh
-       - mkdir -p "$MODULE_ROOT/s3"
+    - mkdir -p "$MODULE_ROOT/s3"
     - NOW=$(date +"%Y%m%d%H%M")
     - echo "cp -p \"${MODULE_NAME}-iphone-${MODULE_VERSION}.zip\" \"${MODULE_ROOT}/s3/${MODULE_NAME}-iphone-${MODULE_VERSION}-${TRAVIS_BRANCH}-${NOW}.zip\""
     - cp -p "${MODULE_NAME}-iphone-${MODULE_VERSION}.zip" "${MODULE_ROOT}/s3/${MODULE_NAME}-iphone-${MODULE_VERSION}-${TRAVIS_BRANCH}-${NOW}.zip"
