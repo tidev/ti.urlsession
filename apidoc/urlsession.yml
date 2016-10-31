@@ -39,7 +39,7 @@ methods:
         Creates a preconfigured session configuration object that can be used to create a URL session for
         performing a background download task.
     parameters:
-      - name: indentifier
+      - name: identifier
         summary: Arbitrary string used to identify the session in the events.
         type: String
     returns:
@@ -86,7 +86,26 @@ methods:
         summary: URL session object.
         type: Object
 
+  - name: reset
+    since: 2.1.0
+    summary: Empties all cookies, cache and credential stores, removes disk files, calls <Modules.URLSession.flush>.
+    parameters:
+      - name: callback
+        summary: Callback to be invoked when the reset completes.
+        type: Callback
+
+  - name: flush
+    since: 2.1.0
+    summary: Flushes storage to disk and clear transient network caches.
+    parameters:
+      - name: callback
+        summary: Callback to be invoked when the reset completes.
+        type: Callback
+
   - name: backgroundDownloadTaskWithURL
+    deprecated:
+        since: 2.1.0
+        notes: Use <Modules.URLSession.addBackgroundDownloadTask> instead.
     summary: |
         Creates a download task for the specified URL, within the provided session object and saves the
         results to a file.
