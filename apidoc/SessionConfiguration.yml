@@ -16,6 +16,7 @@ description: |
 extends: Titanium.Module
 osver: {ios: {min: "7.0"}}
 platforms: [iphone, ipad]
+since: 6.1.0
 
 properties:
   - name: identifier

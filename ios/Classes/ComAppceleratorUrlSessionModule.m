@@ -40,22 +40,22 @@
 
 #pragma Public APIs
 
+// Deprecated: Use "createURLSessionConfiguration" from the proxy directly
 -(id)createURLSessionBackgroundConfiguration:(id)args;
 {
+    NSLog(@"[WARN] Ti.URLSession: 'createURLSessionBackgroundConfiguration(<identifier>)' has been deprecated and replaced with 'createURLSessionConfiguration({identifier: <identifier>})' in 2.1.0");
+
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
-  
+ 
     if ([[args objectAtIndex:0] isKindOfClass:[NSString class]]) {
         // Deprecated
-        NSLog(@"[ERROR] Ti.URLSession: Providing the identifier as a single argument is deprecated in 2.1.0, please use the Object key 'identifier' instead.");
+        NSLog(@"[WARN] Ti.URLSession: Providing the identifier as a single argument is deprecated in 2.1.0, please use the Object key 'identifier' instead.");
         [params setObject:[args objectAtIndex:0] forKey:@"identifier"];
-    } else if ([[args objectAtIndex:0] isKindOfClass:[NSDictionary class]]) {
-        params = (NSMutableDictionary*)[args objectAtIndex:0];
+        return [[ComAppceleratorUrlSessionSessionProxy alloc] _initWithPageContext:[self pageContext] andArguments:params];
     } else {
         NSLog(@"[ERROR] Ti.URLSession: Need to specify a proper identifier to create a URLSessionConfiguration.");
         return [NSNull null];
     }
-
-    return [[ComAppceleratorUrlSessionSessionProxy alloc] _initWithPageContext:[self pageContext] andArguments:params];
 }
 
 -(id)createURLSession:(id)args;
@@ -64,7 +64,7 @@
     
     if ([[args objectAtIndex:0] isKindOfClass:[ComAppceleratorUrlSessionSessionConfigurationProxy class]]) {
         // Deprecated
-        NSLog(@"[ERROR] Ti.URLSession: Providing the configuration as a single argument is deprecated in 2.1.0, please use the Object key 'configuration' instead.");
+        NSLog(@"[WARN] Ti.URLSession: Providing the configuration as a single argument is deprecated in 2.1.0, please use the Object key 'configuration' instead.");
         [params setObject:[args objectAtIndex:0] forKey:@"configuration"];
     } else if ([[args objectAtIndex:0] isKindOfClass:[NSDictionary class]]) {
         params = (NSMutableDictionary*)[args objectAtIndex:0];

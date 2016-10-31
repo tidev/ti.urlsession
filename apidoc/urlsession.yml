@@ -34,35 +34,6 @@ excludes:
     properties: [bubbleParent]
 
 methods:
-  - name: createURLSessionBackgroundConfiguration
-    summary: |
-        Creates a preconfigured session configuration object that can be used to create a URL session for
-        performing a background download task.
-    parameters:
-      - name: identifier
-        summary: Arbitrary string used to identify the session in the events.
-        type: String
-    returns:
-        summary: Configuration object to pass to the <Modules.URLSession.createURLSession> method.
-        type: Object
-
-  - name: createURLSession
-    summary: Creates a session with the specified session configuration.
-    description: |
-        If the session configuration was created with the identifier of a existing session,
-        then this function would return the pre-existing session.
-
-        The session object keeps a strong reference until your app explicitly invalidates the
-        session. If you do not invalidate the session by calling the `invalidateAndCancel` or
-         `finishTasksAndInvalidate` method, your app leaks memory.
-    parameters:
-      - name: sessionConfiguration
-        summary: Session configuration object created with the <Modules.URLSession.createURLSessionBackgroundConfiguration>
-        type: Object 
-    returns:
-        summary: URL session object.
-        type: Object
-
   - name: finishTasksAndInvalidate
     summary: Invalidates the given session object, allowing any outstanding tasks to finish.
     description: |
@@ -87,7 +58,7 @@ methods:
         type: Object
 
   - name: reset
-    since: 2.1.0
+    since: 6.1.0
     summary: Empties all cookies, cache and credential stores, removes disk files, calls <Modules.URLSession.flush>.
     parameters:
       - name: callback
@@ -95,7 +66,7 @@ methods:
         type: Callback
 
   - name: flush
-    since: 2.1.0
+    since: 6.1.0
     summary: Flushes storage to disk and clear transient network caches.
     parameters:
       - name: callback
@@ -104,7 +75,7 @@ methods:
 
   - name: backgroundDownloadTaskWithURL
     deprecated:
-        since: 2.1.0
+        since: 6.1.0
         notes: Use <Modules.URLSession.addBackgroundDownloadTask> instead.
     summary: |
         Creates a download task for the specified URL, within the provided session object and saves the
@@ -125,7 +96,7 @@ methods:
         type: String    
     
   - name: addBackgroundDownloadTask
-    since: 2.1.0
+    since: 6.1.0
     summary: |
         Creates a download task for the specified URL, within the provided session object and saves the
         results to a file.
@@ -142,10 +113,9 @@ methods:
         type: String    
         
   - name: addBackgroundUploadTask
-    since: 2.1.0
+    since: 6.1.0
     summary: |
-        Creates a download task for the specified URL, within the provided session object and saves the
-        results to a file.
+        Creates a upload task for the specified URL, within the provided session object and local data.
     description: |
         Once this function is called, the upload starts automatically. The progress of
         the upload can be monitored by listening to the `uploadprogress` and `sessioncompleted` events.
@@ -172,7 +142,7 @@ properties:
 
 ---
 name: UploadTaskType
-summary: The parameter for [addBackgroundDownloadTask](Modules.URLSession.addBackgroundDownloadTask) method.
+summary: The parameter for [addBackgroundUploadTask](Modules.URLSession.addBackgroundUploadTask) method.
 since: 2.1.0
 properties:
   - name: session

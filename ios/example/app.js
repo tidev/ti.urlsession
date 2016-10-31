@@ -17,7 +17,7 @@ var bgHandlerID,
 
 	//When this function is called always create a session variable so that events are propagated to it.
 	bgHandlerID = event.handlerId;
-	sessionConfig = bgDownload.createURLSessionBackgroundConfiguration({
+	sessionConfig = bgDownload.createURLSessionConfiguration({
 		identifier: "com.test.test2"
 	});
     session = bgDownload.createURLSession({
@@ -43,7 +43,7 @@ Ti.App.iOS.addEventListener('backgroundtransfer', function(event){
 	if (!bgSessionCreated && session == null) {
 		//When this function is called always create a session variable so that events are propagated to it.
 		bgHandlerID = event.handlerId;
-		sessionConfig = bgDownload.createURLSessionBackgroundConfiguration({
+		sessionConfig = bgDownload.createURLSessionConfiguration({
 			identifier: "com.test.test2"
 		});
     	session = bgDownload.createURLSession({
@@ -172,7 +172,7 @@ function refreshSection(){
 appUI.b1.addEventListener('click', function()
 {
 	
-	sessionConfig = bgDownload.createURLSessionBackgroundConfiguration({
+	sessionConfig = bgDownload.createURLSessionConfiguration({
 		identifier: "com.test.test2"
 	});
   	session = bgDownload.createURLSession({
