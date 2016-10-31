@@ -40,24 +40,22 @@
 
 #pragma Public APIs
 
--(id)createURLSessionBackgroundConfiguration:(id)identifier;
+-(id)createURLSessionBackgroundConfiguration:(id)args;
 {
-    ENSURE_SINGLE_ARG(identifier, NSString);
-    
-    if([identifier length] != 0) {
-        ComAppceleratorUrlSessionSessionConfigurationProxy *sessionConfig = [[ComAppceleratorUrlSessionSessionConfigurationProxy alloc] _initWithPageContext:[self pageContext]];
-        
-        if ([TiUtils isIOS8OrGreater] == YES) {
-            [sessionConfig setSessionConfiguration:[NSURLSessionConfiguration backgroundSessionConfigurationWithIdentifier:identifier]];
-        } else {
-            [sessionConfig setSessionConfiguration:[NSURLSessionConfiguration backgroundSessionConfiguration:identifier]];
-        }
-        
-        return sessionConfig;
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+  
+    if ([[args objectAtIndex:0] isKindOfClass:[NSString class]]) {
+        // Deprecated
+        NSLog(@"[ERROR] Ti.URLSession: Providing the identifier as a single argument is deprecated in 2.1.0, please use the Object key 'identifier' instead.");
+        [params setObject:[args objectAtIndex:0] forKey:@"identifier"];
+    } else if ([[args objectAtIndex:0] isKindOfClass:[NSDictionary class]]) {
+        params = (NSMutableDictionary*)[args objectAtIndex:0];
+    } else {
+        NSLog(@"[ERROR] Ti.URLSession: Need to specify a proper identifier to create a URLSessionConfiguration.");
+        return [NSNull null];
     }
-    
-    NSLog(@"[ERROR] Ti.URLSession: Need to specify a proper identifier to create a URLSessionConfiguration.");
-    return [NSNull null];
+
+    return [[ComAppceleratorUrlSessionSessionProxy alloc] _initWithPageContext:[self pageContext] andArguments:params];
 }
 
 -(id)createURLSession:(id)args;

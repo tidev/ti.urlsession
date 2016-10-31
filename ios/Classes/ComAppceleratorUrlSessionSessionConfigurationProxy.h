@@ -7,9 +7,13 @@
 #import "TiProxy.h"
 #import "TiModule.h"
 
-@interface ComAppceleratorUrlSessionSessionConfigurationProxy : TiProxy
+@interface ComAppceleratorUrlSessionSessionConfigurationProxy : TiProxy {
+@private
+    NSURLSessionConfiguration *sessionConfiguration;
+}
 
-@property(nonatomic, retain) NSURLSessionConfiguration *sessionConfiguration;
+- (NSURLSessionConfiguration*)sessionConfiguration;
+- (id)_initWithPageContext:(id<TiEvaluator>)context andArguments:(NSDictionary*)args;
 
 -(void)setHTTPHeaderFields:(id)args;
 -(id)HTTPHeaderFields;

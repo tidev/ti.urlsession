@@ -9,6 +9,33 @@
 
 @implementation ComAppceleratorUrlSessionSessionConfigurationProxy
 
+#pragma mark Internal API's
+
+// TODO: Remove this in Ti.URLSession 3.0.0 by removing the single-arg constructor
+- (id)_initWithPageContext:(id<TiEvaluator>)context andArguments:(NSDictionary*)args
+{
+    if (self == [super _initWithPageContext:context]) {
+        NSString *identifier = [args objectForKey:@"identifier"];
+        
+        if ([TiUtils isIOS8OrGreater] == YES) {
+            sessionConfiguration = [NSURLSessionConfiguration backgroundSessionConfigurationWithIdentifier:identifier];
+        } else {
+            sessionConfiguration = [NSURLSessionConfiguration backgroundSessionConfiguration:identifier];
+        }        
+    }
+    
+    return self;
+}
+
+- (NSURLSessionConfiguration*)sessionConfiguration
+{
+    if (sessionConfiguration == nil) {
+        NSLog(@"[ERROR] Ti.URLSession: sessionConfiguration should not be nil at this point!!");
+    }
+    
+    return sessionConfiguration;
+}
+
 #pragma mark Public API's
 
 - (void)setHTTPHeaderFields:(id)args
@@ -21,12 +48,12 @@
         ENSURE_TYPE([args objectForKey:key], NSString);
     }
     
-    [[self sessionConfiguration] setHTTPAdditionalHeaders:args];
+    [sessionConfiguration setHTTPAdditionalHeaders:args];
 }
 
 - (id)HTTPHeaderFields
 {
-    return [[self sessionConfiguration] HTTPAdditionalHeaders] ?: @{};
+    return [sessionConfiguration HTTPAdditionalHeaders] ?: @{};
 }
 
 @end
