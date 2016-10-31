@@ -1,0 +1,27 @@
+---
+name: Modules.URLSession.SessionConfiguration
+summary: The session configuration object used to create new url sessions.
+description: |
+    These APIs are supported on iOS 7 and later.
+
+    An NSURLSessionConfiguration object defines the behavior and policies to use 
+    when uploading and downloading data using an URLSession object. When uploading 
+    or downloading data, creating a configuration object is always the first step 
+    you must take. You use this object to configure the timeout values, caching 
+    policies, connection requirements, and other types of information that you 
+    intend to use with your URLSession object.
+
+    [iOS Background Services guide](http://docs.appcelerator.com/titanium/latest/#!/guide/iOS_Background_Services).
+
+extends: Titanium.Module
+osver: {ios: {min: "7.0"}}
+platforms: [iphone, ipad]
+
+properties:
+  - name: identifier
+    summary: The unique identifier for the configuration object.
+    description: |
+        This parameter must not be non-null or an empty string.
+    optional: false
+    availability: creation
+    type: String
