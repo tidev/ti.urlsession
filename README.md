@@ -1,4 +1,4 @@
-urlSession [![Build Status](https://travis-ci.org/appcelerator-modules/ti.urlsession.svg)](https://travis-ci.org/appcelerator-modules/ti.urlsession)
+urlSession [![Build Status](https://travis-ci.org/appcelerator-modules/ti.urlsession.svg?branch=master)](https://travis-ci.org/appcelerator-modules/ti.urlsession)
 ==========
 
 **This module is available only for iOS 7 and above.**
