@@ -12,14 +12,21 @@ var bgHandlerID,
 	UIready = false,
 	bgSessionCreated = false;
  
-Ti.App.iOS.addEventListener('backgroundfetch', function(event){
+	Ti.App.iOS.addEventListener('backgroundfetch', function(event){
 	Ti.API.info("Backgroundfetch Event Fired !!! :: " + JSON.stringify(event));
 
 	//When this function is called always create a session variable so that events are propagated to it.
 	bgHandlerID = event.handlerId;
-	sessionConfig = bgDownload.createURLSessionBackgroundConfiguration("com.test.test2");
-    	session = bgDownload.createURLSession(sessionConfig);
-    	var taskIdentifier = bgDownload.backgroundDownloadTaskWithURL(session,"http://yourshot.nationalgeographic.com/exposure/content/photo/photo/1879122_uploadsmember258527yourshot-258527-1879122jpg_z5n3nv2g7piofy6fkaewns5su56efp7ahougetfp4dbeloye3ueq_2880x1922.jpg");
+	sessionConfig = bgDownload.createURLSessionBackgroundConfiguration({
+		identifier: "com.test.test2"
+	});
+    session = bgDownload.createURLSession({
+		configuration: sessionConfig
+	});
+    var taskIdentifier = bgDownload.addBackgroundDownloadTask({
+		session: session,
+		url: "http://yourshot.nationalgeographic.com/exposure/content/photo/photo/1879122_uploadsmember258527yourshot-258527-1879122jpg_z5n3nv2g7piofy6fkaewns5su56efp7ahougetfp4dbeloye3ueq_2880x1922.jpg"
+	});
 	var pendingDL = Ti.App.Properties.getObject('pendingDL');
 	if (pendingDL == null){
 		pendingDL = [];
@@ -29,7 +36,6 @@ Ti.App.iOS.addEventListener('backgroundfetch', function(event){
 	
 	//Start download and end the task.
 	Ti.App.iOS.endBackgroundHandler(bgHandlerID);
-
 });
 
 Ti.App.iOS.addEventListener('backgroundtransfer', function(event){
@@ -37,8 +43,12 @@ Ti.App.iOS.addEventListener('backgroundtransfer', function(event){
 	if (!bgSessionCreated && session == null) {
 		//When this function is called always create a session variable so that events are propagated to it.
 		bgHandlerID = event.handlerId;
-		sessionConfig = bgDownload.createURLSessionBackgroundConfiguration("com.test.test2");
-    	session = bgDownload.createURLSession(sessionConfig);
+		sessionConfig = bgDownload.createURLSessionBackgroundConfiguration({
+			identifier: "com.test.test2"
+		});
+    	session = bgDownload.createURLSession({
+			configuration: sessionConfig
+		});
     	isBGTransferMode =true;
     	bgSessionCreated = true;
 	}
@@ -162,12 +172,19 @@ function refreshSection(){
 appUI.b1.addEventListener('click', function()
 {
 	
-	sessionConfig = bgDownload.createURLSessionBackgroundConfiguration("com.test.test2");
-  session = bgDownload.createURLSession(sessionConfig);
+	sessionConfig = bgDownload.createURLSessionBackgroundConfiguration({
+		identifier: "com.test.test2"
+	});
+  	session = bgDownload.createURLSession({
+		configuration: sessionConfig
+	});
 	bgSessionCreated = true;
 	if (session != null) {
 		//alternate smaller file = "http://yourshot.nationalgeographic.com/exposure/content/photo/photo/1879122_uploadsmember258527yourshot-258527-1879122jpg_z5n3nv2g7piofy6fkaewns5su56efp7ahougetfp4dbeloye3ueq_2880x1922.jpg"
-		var taskIdentifier = bgDownload.backgroundDownloadTaskWithURL(session,"https://www.dropbox.com/s/x9pud64xo7s1pb6/IMG_20130715_181727.jpg");
+		var taskIdentifier = bgDownload.addBackgroundDownloadTask({
+			session: session,
+			url: "https://www.dropbox.com/s/x9pud64xo7s1pb6/IMG_20130715_181727.jpg"
+		});
 		var pendingDL = Ti.App.Properties.getObject('pendingDL');
 		if (pendingDL == null){
 			pendingDL = [];
