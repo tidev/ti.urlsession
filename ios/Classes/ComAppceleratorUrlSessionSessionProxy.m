@@ -25,6 +25,15 @@
     
     return self;
 }
+-(void)_initWithProperties:(NSDictionary *)properties
+{
+    sessionConfiguration = [properties objectForKey:@"configuration"];
+    [self rememberProxy:sessionConfiguration];
+    session = [NSURLSession sessionWithConfiguration:[sessionConfiguration sessionConfiguration]
+                                            delegate:(id<NSURLSessionDelegate>)[[UIApplication sharedApplication] delegate]
+                                       delegateQueue:nil];
+    [super _initWithProperties:properties];
+}
 
 - (NSURLSession*)session
 {

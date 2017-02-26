@@ -14,6 +14,7 @@
 // TODO: Remove this in Ti.URLSession 3.0.0 by removing the single-arg constructor
 - (id)_initWithPageContext:(id<TiEvaluator>)context andArguments:(NSDictionary*)args
 {
+    
     if (self == [super _initWithPageContext:context]) {
         NSString *identifier = [args objectForKey:@"identifier"];
         
@@ -23,8 +24,19 @@
             sessionConfiguration = [NSURLSessionConfiguration backgroundSessionConfiguration:identifier];
         }        
     }
-    
     return self;
+}
+-(void)_initWithProperties:(NSDictionary *)properties
+{
+    
+    NSString *identifier = [properties objectForKey:@"identifier"];
+    
+    if ([TiUtils isIOS8OrGreater] == YES) {
+        sessionConfiguration = [NSURLSessionConfiguration backgroundSessionConfigurationWithIdentifier:identifier];
+    } else {
+        sessionConfiguration = [NSURLSessionConfiguration backgroundSessionConfiguration:identifier];
+    }
+    [super _initWithProperties:properties];
 }
 
 - (NSURLSessionConfiguration*)sessionConfiguration
