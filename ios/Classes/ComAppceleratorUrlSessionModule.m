@@ -146,8 +146,8 @@
             NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
             [request setHTTPMethod:method];
             //additional headers which cannot be set on the sessionConfiguration object
-            if([args objectForKey:@"headers"]){
-                headers = [args objectForKey:@"headers"];
+            if([args objectForKey:@"httpHeaderOverrides"]){
+                headers = [args objectForKey:@"httpHeaderOverrides"];
                 ENSURE_TYPE(headers,NSDictionary);
                 for( id key in headers){
                     ENSURE_TYPE(key, NSString);
