@@ -126,6 +126,26 @@ methods:
     returns:
         summary: Task's identifier number.
         type: String    
+        
+properties:
+  - name: configuration
+    summary: The configuration used for this url session.
+    description: |
+        Configuration options for an <Modules.URLSession.Session> object.  
+        When a session is created, a copy of the configuration object is made.
+        you cannot modify the configuration of a session after it has been created.
+     
+        The shared session uses the global singleton credential, cache
+        and cookie storage objects.
+     
+        An ephemeral session has no persistent disk storage for cookies,
+        cache or credentials.
+     
+        A background session can be used to perform networking operations
+       on behalf of a suspended application, within certain constraints.
+    optional: false
+    availability: creation
+    type: Modules.URLSession.SessionConfiguration
 
 ---
 name: DownloadTaskType

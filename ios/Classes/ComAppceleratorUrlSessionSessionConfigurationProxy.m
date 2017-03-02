@@ -5,9 +5,9 @@
  * Please see the LICENSE included with this distribution for details.
  */
 
-#import "ComAppceleratorUrlSessionURLSessionConfigurationProxy.h"
+#import "ComAppceleratorUrlSessionSessionConfigurationProxy.h"
 
-@implementation ComAppceleratorUrlSessionURLSessionConfigurationProxy
+@implementation ComAppceleratorUrlSessionSessionConfigurationProxy
 
 #pragma mark Internal API's
 

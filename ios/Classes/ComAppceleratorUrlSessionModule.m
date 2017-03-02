@@ -40,36 +40,45 @@
 
 #pragma Public APIs
 
+// Deprecated: Use "createSessionConfiguration" instead and remove in 3.0.0
 - (id)createURLSessionBackgroundConfiguration:(id)args
 {
-    NSLog(@"[WARN] Ti.URLSession: 'createURLSessionBackgroundConfiguration(<identifier>)' has been deprecated and replaced with 'createURLSessionConfiguration({identifier: <identifier>})' in 2.1.0");
+    NSLog(@"[WARN] Ti.URLSession: 'createURLSessionBackgroundConfiguration(<identifier>)' has been deprecated and replaced with 'createSessionConfiguration({identifier: <identifier>})' in 2.1.0");
  
     if ([[args objectAtIndex:0] isKindOfClass:[NSString class]]) {
         NSDictionary *params = @{@"identifier": [args objectAtIndex:0]};
-        return [[ComAppceleratorUrlSessionURLSessionConfigurationProxy alloc] _initWithPageContext:[self pageContext] andArguments:params];
+        return [self createSessionConfiguration:@[params]];
     } else {
         NSLog(@"[ERROR] Ti.URLSession: Need to specify a proper identifier to create a URLSessionConfiguration.");
         return [NSNull null];
     }
 }
 
-- (id)createURLSessionConfiguration:(id)args
+// Deprecated: Use "createSession" instead and remove in 3.0.0
+- (id)createURLSession:(id)args
+{
+    NSLog(@"[WARN] Ti.URLSession: 'createURLSession has been deprecated and replaced with 'createSession' in 2.1.0");
+    
+    return [self createSession:args];
+}
+
+- (id)createSessionConfiguration:(id)args
 {
     ENSURE_SINGLE_ARG(args, NSDictionary);
     
     id identifier = [args objectForKey:@"identifier"];
     ENSURE_TYPE(identifier, NSString);
     
-    return [[ComAppceleratorUrlSessionURLSessionConfigurationProxy alloc] _initWithPageContext:[self pageContext] andArguments:args];
+    return [[ComAppceleratorUrlSessionSessionConfigurationProxy alloc] _initWithPageContext:[self pageContext] andArguments:args];
 }
 
-- (id)createURLSession:(id)args
+- (id)createSession:(id)args
 {
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
     
-    if ([[args objectAtIndex:0] isKindOfClass:[ComAppceleratorUrlSessionURLSessionConfigurationProxy class]]) {
+    if ([[args objectAtIndex:0] isKindOfClass:[ComAppceleratorUrlSessionSessionConfigurationProxy class]]) {
         // Deprecated
-        NSLog(@"[WARN] Ti.URLSession: Providing the configuration as a single argument is deprecated in 2.1.0, please use the Object key 'configuration' instead.");
+        NSLog(@"[WARN] Ti.URLSession: Providing the configuration as a single argument is deprecated in 2.1.0, please use the 'configuration' key instead.");
         [params setObject:[args objectAtIndex:0] forKey:@"configuration"];
     } else if ([[args objectAtIndex:0] isKindOfClass:[NSDictionary class]]) {
         params = (NSMutableDictionary*)[args objectAtIndex:0];
@@ -78,14 +87,14 @@
         return [NSNull null];
     }
     
-    return [[ComAppceleratorUrlSessionURLSessionProxy alloc] _initWithPageContext:[self pageContext] andArguments:params];
+    return [[ComAppceleratorUrlSessionSessionProxy alloc] _initWithPageContext:[self pageContext] andArguments:params];
 }
 
 - (void)finishTasksAndInvalidate:(id)value
 {
-    ENSURE_SINGLE_ARG(value, ComAppceleratorUrlSessionURLSessionProxy);
+    ENSURE_SINGLE_ARG(value, ComAppceleratorUrlSessionSessionProxy);
 
-    NSURLSession *session = [(ComAppceleratorUrlSessionURLSessionProxy*)value session];
+    NSURLSession *session = [(ComAppceleratorUrlSessionSessionProxy*)value session];
     
     if (session != nil) {
         [session finishTasksAndInvalidate];
@@ -96,9 +105,9 @@
 
 - (void)invalidateAndCancel:(id)value
 {
-    ENSURE_SINGLE_ARG(value, ComAppceleratorUrlSessionURLSessionProxy);
+    ENSURE_SINGLE_ARG(value, ComAppceleratorUrlSessionSessionProxy);
     
-    NSURLSession *session = [(ComAppceleratorUrlSessionURLSessionProxy*)value session];
+    NSURLSession *session = [(ComAppceleratorUrlSessionSessionProxy*)value session];
     
     if (session != nil) {
         [session invalidateAndCancel];
@@ -111,7 +120,7 @@
 {
     ENSURE_SINGLE_ARG(value, KrollCallback);
     
-    [[(ComAppceleratorUrlSessionURLSessionProxy*)value session] resetWithCompletionHandler:^{
+    [[(ComAppceleratorUrlSessionSessionProxy*)value session] resetWithCompletionHandler:^{
         NSDictionary * propertiesDict = @{@"completed": NUMBOOL(YES)};
         [(KrollCallback*)value call:[[NSArray alloc] initWithObjects:&propertiesDict count:1] thisObject:self];
     }];
@@ -121,7 +130,7 @@
 {
     ENSURE_SINGLE_ARG(value, KrollCallback);
     
-    [[(ComAppceleratorUrlSessionURLSessionProxy*)value session] flushWithCompletionHandler:^{
+    [[(ComAppceleratorUrlSessionSessionProxy*)value session] flushWithCompletionHandler:^{
         NSDictionary * propertiesDict = @{@"completed": NUMBOOL(YES)};
         [(KrollCallback*)value call:[[NSArray alloc] initWithObjects:&propertiesDict count:1] thisObject:self];
     }];
@@ -131,32 +140,30 @@
 {
     ENSURE_SINGLE_ARG(args, NSDictionary);
     
-    ComAppceleratorUrlSessionURLSessionProxy *session = nil;
+    ComAppceleratorUrlSessionSessionProxy *session = nil;
     NSURLSessionUploadTask *task = nil;
     NSString *url = nil;
-    id data = nil;
     NSString *method = nil;
     NSURL *fileURL = nil;
     NSDictionary *headers = nil;
+    id data = [args objectForKey:@"data"];;
     
-    ENSURE_ARG_FOR_KEY(session, args, @"session", ComAppceleratorUrlSessionURLSessionProxy);
+    ENSURE_ARG_FOR_KEY(session, args, @"session", ComAppceleratorUrlSessionSessionProxy);
     ENSURE_ARG_FOR_KEY(url, args, @"url", NSString);
     ENSURE_ARG_FOR_KEY(method, args, @"method", NSString);
-    data = [args objectForKey:@"data"];
-    
-    
+    ENSURE_ARG_OR_NIL_FOR_KEY(headers, args, @"requestHeaders", NSDictionary);
     
     if ([session session] != nil) {
         if ([url length] != 0) {
             NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
             [request setHTTPMethod:method];
-            //additional headers which cannot be set on the sessionConfiguration object
-            if([args objectForKey:@"requestHeaders"]){
-                headers = [args objectForKey:@"requestHeaders"];
-                ENSURE_TYPE(headers,NSDictionary);
-                for( id key in headers){
+            
+            // Additional headers which cannot be set on the sessionConfiguration object
+            if (headers) {
+                for (id key in headers) {
                     ENSURE_TYPE(key, NSString);
                     ENSURE_TYPE([headers objectForKey:key], NSString);
+                    
                     [request setValue:[headers objectForKey:key] forHTTPHeaderField:key];
                 }
             }
@@ -175,7 +182,7 @@
             
             return NUMINTEGER([task taskIdentifier]);
         } else {
-            NSLog(@"[ERROR] Ti.URLSession: The specified url for background upload task is empty. Please provide a proper url.");
+            NSLog(@"[ERROR] Ti.URLSession: The specified URL for this background upload task is empty. Please provide a valid URL.");
         }
     } else {
         NSLog(@"[ERROR] Ti.URLSession: Need to specify a proper URLSession to start a background upload task.");
@@ -198,10 +205,10 @@
 {
     ENSURE_SINGLE_ARG(args, NSDictionary);
     
-    ComAppceleratorUrlSessionURLSessionProxy *session = nil;
+    ComAppceleratorUrlSessionSessionProxy *session = nil;
     NSString *url = nil;
     
-    ENSURE_ARG_FOR_KEY(session, args, @"session", ComAppceleratorUrlSessionURLSessionProxy);
+    ENSURE_ARG_FOR_KEY(session, args, @"session", ComAppceleratorUrlSessionSessionProxy);
     ENSURE_ARG_FOR_KEY(url, args, @"url", NSString);
     
     if ([session session] != nil) {
