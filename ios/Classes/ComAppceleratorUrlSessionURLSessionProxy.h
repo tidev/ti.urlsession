@@ -6,11 +6,11 @@
  */
 #import "TiProxy.h"
 #import "TiModule.h"
-#import "ComAppceleratorUrlSessionSessionConfigurationProxy.h"
+#import "ComAppceleratorUrlSessionURLSessionConfigurationProxy.h"
 
-@interface ComAppceleratorUrlSessionSessionProxy : TiProxy {
+@interface ComAppceleratorUrlSessionURLSessionProxy : TiProxy {
 @private
-    ComAppceleratorUrlSessionSessionConfigurationProxy *sessionConfiguration;
+    ComAppceleratorUrlSessionURLSessionConfigurationProxy *sessionConfiguration;
     NSURLSession* session;
 }
 

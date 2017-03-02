@@ -5,13 +5,12 @@
  * Please see the LICENSE included with this distribution for details.
  */
 
-#import "ComAppceleratorUrlSessionSessionProxy.h"
+#import "ComAppceleratorUrlSessionURLSessionProxy.h"
 
-@implementation ComAppceleratorUrlSessionSessionProxy
+@implementation ComAppceleratorUrlSessionURLSessionProxy
 
 #pragma mark Internal API's
 
-// TODO: Remove this in Ti.URLSession 3.0.0 by removing the single-arg constructor
 - (id)_initWithPageContext:(id<TiEvaluator>)context andArguments:(NSDictionary*)args
 {
     if (self == [super _initWithPageContext:context]) {
@@ -24,15 +23,6 @@
     }
     
     return self;
-}
--(void)_initWithProperties:(NSDictionary *)properties
-{
-    sessionConfiguration = [properties objectForKey:@"configuration"];
-    [self rememberProxy:sessionConfiguration];
-    session = [NSURLSession sessionWithConfiguration:[sessionConfiguration sessionConfiguration]
-                                            delegate:(id<NSURLSessionDelegate>)[[UIApplication sharedApplication] delegate]
-                                       delegateQueue:nil];
-    [super _initWithProperties:properties];
 }
 
 - (NSURLSession*)session

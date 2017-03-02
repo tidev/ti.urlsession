@@ -1,8 +1,8 @@
 /**
- * ti.urlsession
- *
- * Created by Your Name
- * Copyright (c) 2015 Your Company. All rights reserved.
+ * Appcelerator Titanium Mobile
+ * Copyright (c) 2009-Present by Appcelerator, Inc. All Rights Reserved.
+ * Licensed under the terms of the Apache Public License
+ * Please see the LICENSE included with this distribution for details.
  */
 
 #import "ComAppceleratorUrlSessionModule.h"
@@ -16,20 +16,20 @@
 #pragma mark Internal
 
 // this is generated for your module, please do not change it
--(id)moduleGUID
+- (id)moduleGUID
 {
 	return @"276644d1-41e7-4c67-88a3-55d4fbfa0f24";
 }
 
 // this is generated for your module, please do not change it
--(NSString*)moduleId
+- (NSString*)moduleId
 {
 	return @"com.appcelerator.urlSession";
 }
 
 #pragma mark Lifecycle
 
--(void)startup
+- (void)startup
 {
 	// this method is called when the module is first loaded
 	// you *must* call the superclass
@@ -40,29 +40,34 @@
 
 #pragma Public APIs
 
-// Deprecated: Use "createURLSessionConfiguration" from the proxy directly
--(id)createURLSessionBackgroundConfiguration:(id)args;
+- (id)createURLSessionBackgroundConfiguration:(id)args
 {
     NSLog(@"[WARN] Ti.URLSession: 'createURLSessionBackgroundConfiguration(<identifier>)' has been deprecated and replaced with 'createURLSessionConfiguration({identifier: <identifier>})' in 2.1.0");
-
-    NSMutableDictionary *params = [NSMutableDictionary dictionary];
  
     if ([[args objectAtIndex:0] isKindOfClass:[NSString class]]) {
-        // Deprecated
-        NSLog(@"[WARN] Ti.URLSession: Providing the identifier as a single argument is deprecated in 2.1.0, please use the Object key 'identifier' instead.");
-        [params setObject:[args objectAtIndex:0] forKey:@"identifier"];
-        return [[ComAppceleratorUrlSessionSessionConfigurationProxy alloc] _initWithPageContext:[self pageContext] andArguments:params];
+        NSDictionary *params = @{@"identifier": [args objectAtIndex:0]};
+        return [[ComAppceleratorUrlSessionURLSessionConfigurationProxy alloc] _initWithPageContext:[self pageContext] andArguments:params];
     } else {
         NSLog(@"[ERROR] Ti.URLSession: Need to specify a proper identifier to create a URLSessionConfiguration.");
         return [NSNull null];
     }
 }
 
--(id)createURLSession:(id)args;
+- (id)createURLSessionConfiguration:(id)args
+{
+    ENSURE_SINGLE_ARG(args, NSDictionary);
+    
+    id identifier = [args objectForKey:@"identifier"];
+    ENSURE_TYPE(identifier, NSString);
+    
+    return [[ComAppceleratorUrlSessionURLSessionConfigurationProxy alloc] _initWithPageContext:[self pageContext] andArguments:args];
+}
+
+- (id)createURLSession:(id)args
 {
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
     
-    if ([[args objectAtIndex:0] isKindOfClass:[ComAppceleratorUrlSessionSessionConfigurationProxy class]]) {
+    if ([[args objectAtIndex:0] isKindOfClass:[ComAppceleratorUrlSessionURLSessionConfigurationProxy class]]) {
         // Deprecated
         NSLog(@"[WARN] Ti.URLSession: Providing the configuration as a single argument is deprecated in 2.1.0, please use the Object key 'configuration' instead.");
         [params setObject:[args objectAtIndex:0] forKey:@"configuration"];
@@ -73,14 +78,14 @@
         return [NSNull null];
     }
     
-    return [[ComAppceleratorUrlSessionSessionProxy alloc] _initWithPageContext:[self pageContext] andArguments:params];
+    return [[ComAppceleratorUrlSessionURLSessionProxy alloc] _initWithPageContext:[self pageContext] andArguments:params];
 }
 
--(void)finishTasksAndInvalidate:(id)value
+- (void)finishTasksAndInvalidate:(id)value
 {
-    ENSURE_SINGLE_ARG(value, ComAppceleratorUrlSessionSessionProxy);
+    ENSURE_SINGLE_ARG(value, ComAppceleratorUrlSessionURLSessionProxy);
 
-    NSURLSession *session = [(ComAppceleratorUrlSessionSessionProxy*)value session];
+    NSURLSession *session = [(ComAppceleratorUrlSessionURLSessionProxy*)value session];
     
     if (session != nil) {
         [session finishTasksAndInvalidate];
@@ -89,11 +94,11 @@
     }
 }
 
--(void)invalidateAndCancel:(id)value
+- (void)invalidateAndCancel:(id)value
 {
-    ENSURE_SINGLE_ARG(value, ComAppceleratorUrlSessionSessionProxy);
+    ENSURE_SINGLE_ARG(value, ComAppceleratorUrlSessionURLSessionProxy);
     
-    NSURLSession *session = [(ComAppceleratorUrlSessionSessionProxy*)value session];
+    NSURLSession *session = [(ComAppceleratorUrlSessionURLSessionProxy*)value session];
     
     if (session != nil) {
         [session invalidateAndCancel];
@@ -102,31 +107,31 @@
     }
 }
 
--(void)reset:(id)value
+- (void)reset:(id)value
 {
     ENSURE_SINGLE_ARG(value, KrollCallback);
     
-    [[(ComAppceleratorUrlSessionSessionProxy*)value session] resetWithCompletionHandler:^{
+    [[(ComAppceleratorUrlSessionURLSessionProxy*)value session] resetWithCompletionHandler:^{
         NSDictionary * propertiesDict = @{@"completed": NUMBOOL(YES)};
         [(KrollCallback*)value call:[[NSArray alloc] initWithObjects:&propertiesDict count:1] thisObject:self];
     }];
 }
 
--(void)flush:(id)value
+- (void)flush:(id)value
 {
     ENSURE_SINGLE_ARG(value, KrollCallback);
     
-    [[(ComAppceleratorUrlSessionSessionProxy*)value session] flushWithCompletionHandler:^{
+    [[(ComAppceleratorUrlSessionURLSessionProxy*)value session] flushWithCompletionHandler:^{
         NSDictionary * propertiesDict = @{@"completed": NUMBOOL(YES)};
         [(KrollCallback*)value call:[[NSArray alloc] initWithObjects:&propertiesDict count:1] thisObject:self];
     }];
 }
 
--(id)addBackgroundUploadTask:(id)args
+- (id)addBackgroundUploadTask:(id)args
 {
     ENSURE_SINGLE_ARG(args, NSDictionary);
     
-    ComAppceleratorUrlSessionSessionProxy *session = nil;
+    ComAppceleratorUrlSessionURLSessionProxy *session = nil;
     NSURLSessionUploadTask *task = nil;
     NSString *url = nil;
     id data = nil;
@@ -134,7 +139,7 @@
     NSURL *fileURL = nil;
     NSDictionary *headers = nil;
     
-    ENSURE_ARG_FOR_KEY(session, args, @"session", ComAppceleratorUrlSessionSessionProxy);
+    ENSURE_ARG_FOR_KEY(session, args, @"session", ComAppceleratorUrlSessionURLSessionProxy);
     ENSURE_ARG_FOR_KEY(url, args, @"url", NSString);
     ENSURE_ARG_FOR_KEY(method, args, @"method", NSString);
     data = [args objectForKey:@"data"];
@@ -155,14 +160,13 @@
                     [request setValue:[headers objectForKey:key] forHTTPHeaderField:key];
                 }
             }
-            if([data isKindOfClass:[NSString class]]){
+            
+            if ([data isKindOfClass:[NSString class]]) {
                 fileURL = [TiUtils toURL:data proxy:self];
                 task = [[session session] uploadTaskWithRequest:request fromFile:fileURL];
-            }
-            else if([data isMemberOfClass:[TiBlob class]]){
+            } else if ([data isMemberOfClass:[TiBlob class]]) {
                 task = [[session session] uploadTaskWithRequest:request fromData:[data data]];
-            }
-            else {
+            } else {
                 NSLog(@"[ERROR] Ti.URLSession: The specified data for background upload task is incorrect. Please provide a file path or a blob.");
                 return [NSNull null];
             }
@@ -181,7 +185,7 @@
 }
 
 // Deprecated in 2.1.0
--(id)backgroundDownloadTaskWithURL:(id)args
+- (id)backgroundDownloadTaskWithURL:(id)args
 {
     NSLog(@"[WARN] Ti.URLSession: 'backgroundDownloadTaskWithURL' has been deprecated and replaced with 'addBackgroundDownloadTask' in 2.1.0");
     return [self addBackgroundDownloadTask:@{
@@ -190,14 +194,14 @@
     }];
 }
 
--(id)addBackgroundDownloadTask:(id)args
+- (id)addBackgroundDownloadTask:(id)args
 {
     ENSURE_SINGLE_ARG(args, NSDictionary);
     
-    ComAppceleratorUrlSessionSessionProxy *session = nil;
+    ComAppceleratorUrlSessionURLSessionProxy *session = nil;
     NSString *url = nil;
     
-    ENSURE_ARG_FOR_KEY(session, args, @"session", ComAppceleratorUrlSessionSessionProxy);
+    ENSURE_ARG_FOR_KEY(session, args, @"session", ComAppceleratorUrlSessionURLSessionProxy);
     ENSURE_ARG_FOR_KEY(url, args, @"url", NSString);
     
     if ([session session] != nil) {
