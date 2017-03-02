@@ -156,7 +156,7 @@
                 }
             }
             if([data isKindOfClass:[NSString class]]){
-                fileURL = [NSURL fileURLWithPath:data];
+                fileURL = [TiUtils toURL:data proxy:self];
                 task = [[session session] uploadTaskWithRequest:request fromFile:fileURL];
             }
             else if([data isMemberOfClass:[TiBlob class]]){
