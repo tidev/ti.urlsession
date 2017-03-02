@@ -51,7 +51,7 @@
         // Deprecated
         NSLog(@"[WARN] Ti.URLSession: Providing the identifier as a single argument is deprecated in 2.1.0, please use the Object key 'identifier' instead.");
         [params setObject:[args objectAtIndex:0] forKey:@"identifier"];
-        return [[ComAppceleratorUrlSessionSessionProxy alloc] _initWithPageContext:[self pageContext] andArguments:params];
+        return [[ComAppceleratorUrlSessionSessionConfigurationProxy alloc] _initWithPageContext:[self pageContext] andArguments:params];
     } else {
         NSLog(@"[ERROR] Ti.URLSession: Need to specify a proper identifier to create a URLSessionConfiguration.");
         return [NSNull null];
@@ -127,18 +127,46 @@
     ENSURE_SINGLE_ARG(args, NSDictionary);
     
     ComAppceleratorUrlSessionSessionProxy *session = nil;
+    NSURLSessionUploadTask *task = nil;
     NSString *url = nil;
-    TiBlob *blob = nil;
+    id data = nil;
+    NSString *method = nil;
+    NSURL *fileURL = nil;
+    NSDictionary *headers = nil;
     
     ENSURE_ARG_FOR_KEY(session, args, @"session", ComAppceleratorUrlSessionSessionProxy);
     ENSURE_ARG_FOR_KEY(url, args, @"url", NSString);
-    ENSURE_ARG_FOR_KEY(blob, args, @"data", TiBlob);
+    ENSURE_ARG_FOR_KEY(method, args, @"method", NSString);
+    data = [args objectForKey:@"data"];
+    
+    
     
     if ([session session] != nil) {
         if ([url length] != 0) {
-            NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
-            NSURLSessionUploadTask *task = [[session session] uploadTaskWithRequest:request
-                                                                                          fromData:[blob data]];
+            NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
+            [request setHTTPMethod:method];
+            //additional headers which cannot be set on the sessionConfiguration object
+            if([args objectForKey:@"requestHeaders"]){
+                headers = [args objectForKey:@"requestHeaders"];
+                ENSURE_TYPE(headers,NSDictionary);
+                for( id key in headers){
+                    ENSURE_TYPE(key, NSString);
+                    ENSURE_TYPE([headers objectForKey:key], NSString);
+                    [request setValue:[headers objectForKey:key] forHTTPHeaderField:key];
+                }
+            }
+            if([data isKindOfClass:[NSString class]]){
+                fileURL = [TiUtils toURL:data proxy:self];
+                task = [[session session] uploadTaskWithRequest:request fromFile:fileURL];
+            }
+            else if([data isMemberOfClass:[TiBlob class]]){
+                task = [[session session] uploadTaskWithRequest:request fromData:[data data]];
+            }
+            else {
+                NSLog(@"[ERROR] Ti.URLSession: The specified data for background upload task is incorrect. Please provide a file path or a blob.");
+                return [NSNull null];
+            }
+            
             [task resume];
             
             return NUMINTEGER([task taskIdentifier]);
@@ -159,7 +187,6 @@
     return [self addBackgroundDownloadTask:@{
         @"session": [args objectAtIndex:0],
         @"url": [args objectAtIndex:1],
-        @"data": [args objectAtIndex:2],
     }];
 }
 
