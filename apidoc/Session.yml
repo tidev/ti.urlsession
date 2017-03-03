@@ -16,6 +16,68 @@ osver: {ios: {min: "7.0"}}
 platforms: [iphone, ipad]
 since: 6.1.0
 
+methods:
+  - name: finishTasksAndInvalidate
+    summary: Invalidates the given session object, allowing any outstanding tasks to finish.
+    description: |
+        This method returns immediately without waiting for tasks to finish. Once a session is invalidated,
+        new tasks cannot be created in the session, but existing tasks continue until completion. Once
+        invalidated, references to the events and callback objects are broken. Session objects cannot be
+        reused. To cancel all outstanding tasks, call `invalidateAndCancel` instead.
+
+  - name: invalidateAndCancel
+    summary: Cancels all outstanding tasks and then invalidates the session object.
+    description: |
+        Once invalidated, references to the events and callback objects are broken. 
+        Session objects cannot be reused. To allow outstanding tasks to run until 
+        completion, call `finishTasksAndInvalidate` instead.
+         
+ - name: downloadTask
+   summary: |
+       Creates a download task for the specified URL, within the provided session 
+       object and saves the results to a file.
+   description: |
+       Once this function is called, the download starts automatically. The progress 
+       of the download can be monitored by listening to the `downloadprogress`, 
+       `downloadcompleted`, `sessioneventscompleted` and `sessioncompleted` events.
+   parameters:
+     - name: args
+       summary: An object representing the arguments to add a new background task.
+       type: DownloadTaskType
+   returns:
+       summary: Task's identifier number.
+       type: String    
+ 
+  - name: uploadTask
+    summary: |
+        Creates a upload task for the specified URL, within the provided session 
+        object and local data.
+    description: |
+        Once this function is called, the upload starts automatically. The progress 
+        of the upload can be monitored by listening to the `uploadprogress` and 
+        `sessioncompleted` events.
+    parameters:
+      - name: args
+        summary: An object representing the arguments to add a new upload task.
+        type: UploadTaskType
+    returns:
+        summary: Task's identifier number.
+        type: String          
+
+  - name: reset
+    summary: Empties all cookies, cache and credential stores, removes disk files, calls <Modules.URLSession.Session.flush>.
+    parameters:
+      - name: callback
+        summary: Callback to be invoked when the reset completes.
+        type: Callback
+
+  - name: flush
+    summary: Flushes storage to disk and clear transient network caches.
+    parameters:
+      - name: callback
+        summary: Callback to be invoked when the reset completes.
+        type: Callback
+
 properties:
   - name: configuration
     summary: The configuration used for this url session.
@@ -35,3 +97,34 @@ properties:
     optional: false
     availability: creation
     type: Modules.URLSession.SessionConfiguration
+
+---
+name: DownloadTaskType
+summary: The parameter for [downloadTask](Modules.URLSession.Session.downloadTask) method.
+properties:
+  - name: url
+    summary: The remote url used for this data task.
+    type: String
+
+---
+name: UploadTaskType
+summary: The parameter for [uploadTask](Modules.URLSession.Session.uploadTask) method.
+properties:
+  - name: url
+    summary: The remote url used for this data task.
+    type: String
+    optional: false
+
+  - name: data
+    summary: The data blob used for this data task.
+    type: Titanium.Blob
+    optional: false
+
+  - name: method
+    summary: The request method (e.g. POST or PUT)
+    default: POST
+    type: String
+
+  - name: requestHeaders
+    summary: Additional request headers to pass to the request.
+    type: String

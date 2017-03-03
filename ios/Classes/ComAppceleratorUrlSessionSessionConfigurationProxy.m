@@ -13,7 +13,7 @@
 
 - (id)_initWithPageContext:(id<TiEvaluator>)context andArguments:(NSDictionary*)args
 {
-    if (self == [super _initWithPageContext:context]) {
+    if (self = [super _initWithPageContext:context]) {
         NSString *identifier = [args objectForKey:@"identifier"];
         
         if ([TiUtils isIOS8OrGreater] == YES) {

@@ -11,10 +11,26 @@
 @interface ComAppceleratorUrlSessionSessionProxy : TiProxy {
 @private
     ComAppceleratorUrlSessionSessionConfigurationProxy *sessionConfiguration;
-    NSURLSession* session;
 }
 
-- (NSURLSession*)session;
+#pragma mark Proxy Handling
+
+@property(nonatomic, strong) NSURLSession *session;
+
 - (id)_initWithPageContext:(id<TiEvaluator>)context andArguments:(NSDictionary*)args;
+
+#pragma mark Public API's
+
+- (id)uploadTask:(id)args;
+
+- (id)downloadTask:(id)args;
+
+- (void)finishTasksAndInvalidate:(id)unused;
+
+- (void)invalidateAndCancel:(id)unused;
+
+- (void)reset:(id)value;
+
+- (void)flush:(id)value;
 
 @end

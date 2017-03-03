@@ -19,20 +19,12 @@
 
 - (id)backgroundDownloadTaskWithURL:(id)args; // Deprecated in 2.1.0: Use "addBackgroundDownloadTask" instead.
 
+- (void)finishTasksAndInvalidate:(id)value; // Deprecated in 2.1.0: Use "Session.finishTasksAndInvalidate" instead.
+
+- (void)invalidateAndCancel:(id)value; // Deprecated in 2.1.0: Use "Session.invalidateAndCancel" instead.
+
 - (id)createSessionConfiguration:(id)args;
 
 - (id)createSession:(id)args;
-
-- (void)finishTasksAndInvalidate:(id)value;
-
-- (void)invalidateAndCancel:(id)value;
-
-- (void)reset:(id)value;
-
-- (void)flush:(id)value;
-
-- (id)addBackgroundUploadTask:(id)args;
-
-- (id)addBackgroundDownloadTask:(id)args;
 
 @end

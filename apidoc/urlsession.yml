@@ -45,6 +45,9 @@ methods:
       - name: session
         summary: URL session object.
         type: Object
+    deprecated:
+        since: 6.1.0
+        notes: Use <Modules.URLSession.Session.finishTasksAndInvalidate> (on the session object) instead.
 
   - name: invalidateAndCancel
     summary: Cancels all outstanding tasks and then invalidates the session object.
@@ -56,27 +59,14 @@ methods:
       - name: session
         summary: URL session object.
         type: Object
-
-  - name: reset
-    since: 6.1.0
-    summary: Empties all cookies, cache and credential stores, removes disk files, calls <Modules.URLSession.flush>.
-    parameters:
-      - name: callback
-        summary: Callback to be invoked when the reset completes.
-        type: Callback
-
-  - name: flush
-    since: 6.1.0
-    summary: Flushes storage to disk and clear transient network caches.
-    parameters:
-      - name: callback
-        summary: Callback to be invoked when the reset completes.
-        type: Callback
+    deprecated:
+        since: 6.1.0
+        notes: Use <Modules.URLSession.Session.invalidateAndCancel> (on the session object) instead.
 
   - name: backgroundDownloadTaskWithURL
     deprecated:
         since: 6.1.0
-        notes: Use <Modules.URLSession.addBackgroundDownloadTask> instead.
+        notes: Use <Modules.URLSession.Session.downloadTask> on the session directly.
     summary: |
         Creates a download task for the specified URL, within the provided session object and saves the
         results to a file.
@@ -94,39 +84,7 @@ methods:
     returns:
         summary: Task's identifier number.
         type: String    
-    
-  - name: addBackgroundDownloadTask
-    since: 6.1.0
-    summary: |
-        Creates a download task for the specified URL, within the provided session object and saves the
-        results to a file.
-    description: |
-        Once this function is called, the download starts automatically. The progress of
-        the download can be monitored by listening to the `downloadprogress`, `downloadcompleted`,
-        `sessioneventscompleted` and `sessioncompleted` events.
-    parameters:
-      - name: args
-        summary: An object representing the arguments to add a new background task.
-        type: DownloadTaskType
-    returns:
-        summary: Task's identifier number.
-        type: String    
-        
-  - name: addBackgroundUploadTask
-    since: 6.1.0
-    summary: |
-        Creates a upload task for the specified URL, within the provided session object and local data.
-    description: |
-        Once this function is called, the upload starts automatically. The progress of
-        the upload can be monitored by listening to the `uploadprogress` and `sessioncompleted` events.
-    parameters:
-      - name: args
-        summary: An object representing the arguments to add a new upload task.
-        type: UploadTaskType
-    returns:
-        summary: Task's identifier number.
-        type: String    
-        
+ 
 properties:
   - name: configuration
     summary: The configuration used for this url session.
@@ -146,33 +104,3 @@ properties:
     optional: false
     availability: creation
     type: Modules.URLSession.SessionConfiguration
-
----
-name: DownloadTaskType
-summary: The parameter for [addBackgroundDownloadTask](Modules.URLSession.addBackgroundDownloadTask) method.
-since: 2.1.0
-properties:
-  - name: session
-    summary: The url session used for this data task.
-    type: <Modules.URLSession.Session>
-    
-  - name: url
-    summary: The remote url used for this data task.
-    type: String
-
----
-name: UploadTaskType
-summary: The parameter for [addBackgroundUploadTask](Modules.URLSession.addBackgroundUploadTask) method.
-since: 2.1.0
-properties:
-  - name: session
-    summary: The url session used for this data task.
-    type: <Modules.URLSession.Session>
-    
-  - name: url
-    summary: The remote url used for this data task.
-    type: String
-
-  - name: data
-    summary: The data blob used for this data task.
-    type: TiBlob
