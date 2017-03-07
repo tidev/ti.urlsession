@@ -100,7 +100,7 @@
     ENSURE_ARG_AT_INDEX(session, args, 0, ComAppceleratorUrlSessionSessionProxy);
     ENSURE_TYPE([args objectAtIndex:1], NSString);
     
-    [session downloadTask:@{@"url": [TiUtils stringValue:[args objectAtIndex:1]]}];
+    return [session downloadTask:@{@"url": [TiUtils stringValue:[args objectAtIndex:1]]}];
 }
 
 - (void)finishTasksAndInvalidate:(id)value
