@@ -38,7 +38,7 @@ Returns a sesson object.
 invalidates the session. If you do not invalidate the session by calling the invalidateAndCancel() 
 or finishTasksAndInvalidate() method, your app leaks memory.
 
-### finishTasksAndInvalidate()
+### finishTasksAndInvalidate(session object)
 
 Invalidates the given session object, allowing any outstanding tasks to finish.
 
@@ -50,7 +50,7 @@ To cancel all outstanding tasks, call invalidateAndCancel() instead.
 * Takes one argument, a session object : the session which the user wants to invalidate. 
 
 
-### invalidateAndCancel()
+### invalidateAndCancel(session object)
 
 Cancels all outstanding tasks and then invalidates the session object.
 
@@ -133,9 +133,9 @@ usage :
 
 The following event information will be provided:	
 
-* taskIdentifier[int] : The task identifier number for the download/upload task that finished.
-* success[boolean] : Indicates if the operation succeeded. Returns true if download/upload succeeded, false otherwise. 
-* erroCode[int] : The error code of the error, if any (potentially system-dependent).
+* taskIdentifier[int] : The task identifier number for the download or upload task that finished.
+* success[boolean] : Indicates if the operation succeeded. Returns true if download or upload succeeded, false otherwise. 
+* errorCode[int] : The error code of the error, if any (potentially system-dependent).
 * message[string] : A string containing the localized description of the error. 
 
 ## Usage
