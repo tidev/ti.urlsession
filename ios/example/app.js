@@ -238,6 +238,6 @@ function triggerDownload() {
         }
         pendingDL.push(taskIdentifier);
         Ti.App.Properties.setObject('pendingDL', pendingDL);
-        appUI.listView.setSections(refreshSection());
+        listView.setSections(refreshSection());
     }
 }
