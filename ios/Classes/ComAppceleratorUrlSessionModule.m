@@ -85,7 +85,7 @@
 
 - (id)createURLSession:(id)args
 {
-    DEPRECATED_REPLACED(@"URLSession.createURLSession", @"2.1.0", @"URLSession.createUSession");
+    DEPRECATED_REPLACED(@"URLSession.createURLSession", @"2.1.0", @"URLSession.createSession");
     
     return [self createSession:args];
 }
