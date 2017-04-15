@@ -1,5 +1,8 @@
 # Change Log
 
+## 2.1.0
+Add support for upload tasks and more advanced session configuration.
+
 ## 2.0.0
 Refactored module to work on iOS 9 and prevent app submission failture. [MOD-2150]
 

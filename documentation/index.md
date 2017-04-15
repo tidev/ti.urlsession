@@ -59,16 +59,28 @@ To allow outstanding tasks to run until completion, call finishTasksAndInvalidat
 
 * Takes one argument, a session object : the session which the user wants to invalidate. 
 
-### backgroundDownloadTaskWithURL(session object, string)
+### addBackgroundDownloadTask(args)
 
 Creates a download task for the specified URL, within the provided session object and saves the results to a file.
 Once this function is called, the download starts automatically. The progress of the download can be monitored by listening 
 to `downloadprogress` , `downloadcompleted`, `sessioneventscompleted` and `sessioncompleted` events explained below.
 
-* Takes two arguments, 
-   * a session object : (Object created using createURLSession()) Session which with the new background task should be associated with.
+* Takes an object of arguments, 
+   * session[URLSession] : (Object created using createURLSession()) Session which with the new background task should be associated with.
    * url[string] : The string that provides the URL to be downloaded.
-   
+
+
+### addBackgroundUploadTask(args)
+
+Creates an upload task for the specified URL, within the provided session object and the file-blob to upload.
+Once this function is called, the upload starts automatically. The progress of the upload can be monitored by listening 
+to `uploadprogress` and `sessioncompleted` events explained below.
+
+* Takes an object of arguments, 
+   * session[URLSession] : (Object created using createURLSession()) Session which with the new background task should be associated with.
+   * url[string] : The string that provides the URL to upload to.
+   * data[TiBlob] : The file-blob to be uploaded.
+
 Returns the new created task's identifier number. 
 
 ## Events
@@ -113,7 +125,6 @@ usage :
 
 ### sessioncompleted
 
-
 Informs the app that the task finished transferring data.
 
 <strong>Important</strong>This event is exposed inside Ti.App.iOS Proxy.
@@ -122,8 +133,8 @@ usage :
 
 The following event information will be provided:	
 
-* taskIdentifier[int] : The task identifier number for the download task that finished.
-* success[boolean] : Indicates if the operation succeeded. Returns true if download succeeded, false otherwise. 
+* taskIdentifier[int] : The task identifier number for the download or upload task that finished.
+* success[boolean] : Indicates if the operation succeeded. Returns true if download or upload succeeded, false otherwise. 
 * errorCode[int] : The error code of the error, if any (potentially system-dependent).
 * message[string] : A string containing the localized description of the error. 
 
@@ -144,5 +155,5 @@ View the [change log](changelog.html) for this module.
 Please direct all questions, feedback, and concerns to [info@appcelerator.com](mailto:info@appcelerator.com?subject=iOS%20urlSesson%20Module). 
 
 ## License
-Copyright(c) 2010-2015 by Appcelerator, Inc. All Rights Reserved. Please see the LICENSE 
+Copyright(c) 2010-Present by Appcelerator, Inc. All Rights Reserved. Please see the LICENSE 
 file included in the distribution for further details.

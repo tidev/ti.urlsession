@@ -34,35 +34,6 @@ excludes:
     properties: [bubbleParent]
 
 methods:
-  - name: createURLSessionBackgroundConfiguration
-    summary: |
-        Creates a preconfigured session configuration object that can be used to create a URL session for
-        performing a background download task.
-    parameters:
-      - name: indentifier
-        summary: Arbitrary string used to identify the session in the events.
-        type: String
-    returns:
-        summary: Configuration object to pass to the <Modules.URLSession.createURLSession> method.
-        type: Object
-
-  - name: createURLSession
-    summary: Creates a session with the specified session configuration.
-    description: |
-        If the session configuration was created with the identifier of a existing session,
-        then this function would return the pre-existing session.
-
-        The session object keeps a strong reference until your app explicitly invalidates the
-        session. If you do not invalidate the session by calling the `invalidateAndCancel` or
-         `finishTasksAndInvalidate` method, your app leaks memory.
-    parameters:
-      - name: sessionConfiguration
-        summary: Session configuration object created with the <Modules.URLSession.createURLSessionBackgroundConfiguration>
-        type: Object 
-    returns:
-        summary: URL session object.
-        type: Object
-
   - name: finishTasksAndInvalidate
     summary: Invalidates the given session object, allowing any outstanding tasks to finish.
     description: |
@@ -74,6 +45,9 @@ methods:
       - name: session
         summary: URL session object.
         type: Object
+    deprecated:
+        since: 6.1.0
+        notes: Use <Modules.URLSession.Session.finishTasksAndInvalidate> (on the session object) instead.
 
   - name: invalidateAndCancel
     summary: Cancels all outstanding tasks and then invalidates the session object.
@@ -85,8 +59,14 @@ methods:
       - name: session
         summary: URL session object.
         type: Object
+    deprecated:
+        since: 6.1.0
+        notes: Use <Modules.URLSession.Session.invalidateAndCancel> (on the session object) instead.
 
   - name: backgroundDownloadTaskWithURL
+    deprecated:
+        since: 6.1.0
+        notes: Use <Modules.URLSession.Session.downloadTask> on the session directly.
     summary: |
         Creates a download task for the specified URL, within the provided session object and saves the
         results to a file.
@@ -104,3 +84,23 @@ methods:
     returns:
         summary: Task's identifier number.
         type: String    
+ 
+properties:
+  - name: configuration
+    summary: The configuration used for this url session.
+    description: |
+        Configuration options for an <Modules.URLSession.Session> object.  
+        When a session is created, a copy of the configuration object is made.
+        you cannot modify the configuration of a session after it has been created.
+     
+        The shared session uses the global singleton credential, cache
+        and cookie storage objects.
+     
+        An ephemeral session has no persistent disk storage for cookies,
+        cache or credentials.
+     
+        A background session can be used to perform networking operations
+       on behalf of a suspended application, within certain constraints.
+    optional: false
+    availability: creation
+    type: Modules.URLSession.SessionConfiguration

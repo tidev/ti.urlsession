@@ -1,128 +1,123 @@
 /**
- * ti.urlsession
- *
- * Created by Your Name
- * Copyright (c) 2015 Your Company. All rights reserved.
+ * Appcelerator Titanium Mobile
+ * Copyright (c) 2009-Present by Appcelerator, Inc. All Rights Reserved.
+ * Licensed under the terms of the Apache Public License
+ * Please see the LICENSE included with this distribution for details.
  */
 
 #import "ComAppceleratorUrlSessionModule.h"
 #import "TiBase.h"
 #import "TiHost.h"
 #import "TiUtils.h"
+#import "TiBlob.h"
 
 @implementation ComAppceleratorUrlSessionModule
 
 #pragma mark Internal
 
 // this is generated for your module, please do not change it
--(id)moduleGUID
+- (id)moduleGUID
 {
 	return @"276644d1-41e7-4c67-88a3-55d4fbfa0f24";
 }
 
 // this is generated for your module, please do not change it
--(NSString*)moduleId
+- (NSString*)moduleId
 {
 	return @"com.appcelerator.urlSession";
 }
 
 #pragma mark Lifecycle
 
--(void)startup
+- (void)startup
 {
 	// this method is called when the module is first loaded
 	// you *must* call the superclass
 	[super startup];
 
-	NSLog(@"[INFO] %@ loaded",self);
+	NSLog(@"[DEBUG] %@ loaded",self);
 }
 
--(void)shutdown:(id)sender
-{
-	// this method is called when the module is being unloaded
-	// typically this is during shutdown. make sure you don't do too
-	// much processing here or the app will be quit forceably
+#pragma mark Public APIs
 
-	// you *must* call the superclass
-	[super shutdown:sender];
+- (id)createSessionConfiguration:(id)args
+{
+    ENSURE_SINGLE_ARG(args, NSDictionary);
+    
+    id identifier = [args objectForKey:@"identifier"];
+    ENSURE_TYPE(identifier, NSString);
+    
+    return [[ComAppceleratorUrlSessionSessionConfigurationProxy alloc] _initWithPageContext:[self pageContext] andArguments:args];
 }
 
-#pragma Public APIs
-
--(SessionConfigurationProxy*)createURLSessionBackgroundConfiguration:(id)identifier;
+- (id)createSession:(id)args
 {
-    ENSURE_SINGLE_ARG(identifier, NSString);
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
     
-    if([identifier length] != 0) {
-        return [[SessionConfigurationProxy alloc] initWithIdentifier:[TiUtils stringValue:identifier]];
-    }
-    
-    NSLog(@"[ERROR] Need to specify a proper identifier to create a URLSessionConfiguration.");
-    return nil;
-}
-
--(SessionProxy*)createURLSession:(id)sessionConfiguration;
-{
-    ENSURE_SINGLE_ARG(sessionConfiguration, SessionConfigurationProxy);
-    
-    if	([sessionConfiguration sessionConfiguration] != nil) {
-        return [[SessionProxy alloc] initWithSessionConfiguration:[sessionConfiguration sessionConfiguration]];
-    }
-    
-    NSLog(@"[ERROR] Cannot create URLSession. Please provide a proper session configuration object.");
-    return  nil;
-}
-
--(void)finishTasksAndInvalidate:(id)value
-{
-    ENSURE_SINGLE_ARG(value, SessionProxy);
-
-    NSURLSession *session = [(SessionProxy*)value session];
-    
-    if (session != nil) {
-        [session finishTasksAndInvalidate];
+    if ([[args objectAtIndex:0] isKindOfClass:[ComAppceleratorUrlSessionSessionConfigurationProxy class]]) {
+        // Deprecated
+        NSLog(@"[WARN] Ti.URLSession: Providing the configuration as a single argument is deprecated in 2.1.0, please use the 'configuration' key instead.");
+        [params setObject:[args objectAtIndex:0] forKey:@"configuration"];
+    } else if ([[args objectAtIndex:0] isKindOfClass:[NSDictionary class]]) {
+        params = (NSMutableDictionary*)[args objectAtIndex:0];
     } else {
-        NSLog(@"[ERROR] Provided session is empty. Please provide a proper session to invalidate.");
+        NSLog(@"[ERROR] Ti.URLSession: Cannot create URLSession. Please provide a proper SessionConfiguration object.");
+        return [NSNull null];
     }
+    
+    return [[ComAppceleratorUrlSessionSessionProxy alloc] _initWithPageContext:[self pageContext] andArguments:params];
 }
 
--(void)invalidateAndCancel:(id)value
+#pragma mark - Deprecated
+
+- (id)createURLSessionBackgroundConfiguration:(id)args
 {
-    ENSURE_SINGLE_ARG(value, SessionProxy);
+    NSLog(@"[WARN] Ti.URLSession: 'createURLSessionBackgroundConfiguration(<identifier>)' has been deprecated and replaced with 'createSessionConfiguration({identifier: <identifier>})' in 2.1.0");
     
-    NSURLSession *session = [(SessionProxy*)value session];
-    
-    if (session != nil) {
-        [session invalidateAndCancel];
+    if ([[args objectAtIndex:0] isKindOfClass:[NSString class]]) {
+        NSDictionary *params = @{@"identifier": [args objectAtIndex:0]};
+        return [self createSessionConfiguration:@[params]];
     } else {
-        NSLog(@"[ERROR] Provided session is empty. Please provide a proper session to invalidate.");
+        NSLog(@"[ERROR] Ti.URLSession: Need to specify a proper identifier to create a URLSessionConfiguration.");
+        return [NSNull null];
     }
 }
 
--(NSNumber*)backgroundDownloadTaskWithURL:(id)args
+- (id)createURLSession:(id)args
 {
+    DEPRECATED_REPLACED(@"URLSession.createURLSession", @"2.1.0", @"URLSession.createSession");
+    
+    return [self createSession:args];
+}
+
+- (id)backgroundDownloadTaskWithURL:(id)args
+{
+    DEPRECATED_REPLACED(@"URLSession.backgroundDownloadTaskWithURL", @"2.1.0", @"URLSession.Session.downloadTask");
+
     ENSURE_ARG_COUNT(args, 2);
     
-    SessionProxy *session = nil;
-    NSString *url = nil;
+    ComAppceleratorUrlSessionSessionProxy *session;
+    ENSURE_ARG_AT_INDEX(session, args, 0, ComAppceleratorUrlSessionSessionProxy);
+    ENSURE_TYPE([args objectAtIndex:1], NSString);
     
-    ENSURE_ARG_AT_INDEX(session, args, 0, SessionProxy);
-    ENSURE_ARG_AT_INDEX(url, args, 1, NSString);
-    
-    if ([(SessionProxy*)session session] != nil) {
-        if ([url length] != 0) {
-            NSURLSessionDownloadTask *task = [[(SessionProxy*)session session] downloadTaskWithURL:[NSURL URLWithString:url]];
-            [task resume];
-            
-            return NUMINTEGER([task taskIdentifier]);
-        } else {
-            NSLog(@"[ERROR] The specified url for background download task is empty. Please provide a proper url.");
-        }
-    } else {
-        NSLog(@"[ERROR] Need to specify a proper URLSession to start a background download task.");
-    }
+    return [session downloadTask:@{@"url": [TiUtils stringValue:[args objectAtIndex:1]]}];
+}
 
-    return nil;
+- (void)finishTasksAndInvalidate:(id)value
+{
+    DEPRECATED_REPLACED(@"URLSession.finishTasksAndInvalidate", @"2.1.0", @"URLSession.Session.finishTasksAndInvalidate");
+
+    ENSURE_SINGLE_ARG(value, ComAppceleratorUrlSessionSessionProxy);
+    
+    [value finishTasksAndInvalidate:nil];
+}
+
+- (void)invalidateAndCancel:(id)value
+{
+    ENSURE_SINGLE_ARG(value, ComAppceleratorUrlSessionSessionProxy);
+    DEPRECATED_REPLACED(@"URLSession.invalidateAndCancel", @"2.1.0", @"URLSession.Session.invalidateAndCancel");
+    
+    [value invalidateAndCancel:nil];
 }
 
 @end

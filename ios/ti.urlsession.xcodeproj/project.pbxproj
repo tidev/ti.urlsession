@@ -26,12 +26,12 @@
 		24DD6CFA1134B3F500162E58 /* ComAppceleratorUrlSessionModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 24DD6CF81134B3F500162E58 /* ComAppceleratorUrlSessionModule.m */; };
 		24DE9E1111C5FE74003F90F6 /* ComAppceleratorUrlSessionModuleAssets.h in Headers */ = {isa = PBXBuildFile; fileRef = 24DE9E0F11C5FE74003F90F6 /* ComAppceleratorUrlSessionModuleAssets.h */; };
 		24DE9E1211C5FE74003F90F6 /* ComAppceleratorUrlSessionModuleAssets.m in Sources */ = {isa = PBXBuildFile; fileRef = 24DE9E1011C5FE74003F90F6 /* ComAppceleratorUrlSessionModuleAssets.m */; };
-		3AE6391B1BDEAA4600A3796A /* SessionProxy.h in Headers */ = {isa = PBXBuildFile; fileRef = 3AE639191BDEAA4600A3796A /* SessionProxy.h */; };
-		3AE6391C1BDEAA4600A3796A /* SessionProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AE6391A1BDEAA4600A3796A /* SessionProxy.m */; };
-		3AE6391F1BDEAA9100A3796A /* SessionConfigurationProxy.h in Headers */ = {isa = PBXBuildFile; fileRef = 3AE6391D1BDEAA9100A3796A /* SessionConfigurationProxy.h */; };
-		3AE639201BDEAA9100A3796A /* SessionConfigurationProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AE6391E1BDEAA9100A3796A /* SessionConfigurationProxy.m */; };
 		AA747D9F0F9514B9006C5449 /* ComAppceleratorUrlSession_Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = AA747D9E0F9514B9006C5449 /* ComAppceleratorUrlSession_Prefix.pch */; };
 		AACBBE4A0F95108600F1A2B1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AACBBE490F95108600F1A2B1 /* Foundation.framework */; };
+		DB19DF7F1DC7D01500FEA769 /* ComAppceleratorUrlSessionSessionConfigurationProxy.h in Headers */ = {isa = PBXBuildFile; fileRef = DB19DF7B1DC7D01500FEA769 /* ComAppceleratorUrlSessionSessionConfigurationProxy.h */; };
+		DB19DF801DC7D01500FEA769 /* ComAppceleratorUrlSessionSessionConfigurationProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = DB19DF7C1DC7D01500FEA769 /* ComAppceleratorUrlSessionSessionConfigurationProxy.m */; };
+		DB19DF811DC7D01500FEA769 /* ComAppceleratorUrlSessionSessionProxy.h in Headers */ = {isa = PBXBuildFile; fileRef = DB19DF7D1DC7D01500FEA769 /* ComAppceleratorUrlSessionSessionProxy.h */; };
+		DB19DF821DC7D01500FEA769 /* ComAppceleratorUrlSessionSessionProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = DB19DF7E1DC7D01500FEA769 /* ComAppceleratorUrlSessionSessionProxy.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,13 +50,13 @@
 		24DD6D1B1134B66800162E58 /* titanium.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = titanium.xcconfig; sourceTree = "<group>"; };
 		24DE9E0F11C5FE74003F90F6 /* ComAppceleratorUrlSessionModuleAssets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ComAppceleratorUrlSessionModuleAssets.h; path = Classes/ComAppceleratorUrlSessionModuleAssets.h; sourceTree = "<group>"; };
 		24DE9E1011C5FE74003F90F6 /* ComAppceleratorUrlSessionModuleAssets.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ComAppceleratorUrlSessionModuleAssets.m; path = Classes/ComAppceleratorUrlSessionModuleAssets.m; sourceTree = "<group>"; };
-		3AE639191BDEAA4600A3796A /* SessionProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SessionProxy.h; path = Classes/SessionProxy.h; sourceTree = "<group>"; };
-		3AE6391A1BDEAA4600A3796A /* SessionProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SessionProxy.m; path = Classes/SessionProxy.m; sourceTree = "<group>"; };
-		3AE6391D1BDEAA9100A3796A /* SessionConfigurationProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SessionConfigurationProxy.h; sourceTree = "<group>"; };
-		3AE6391E1BDEAA9100A3796A /* SessionConfigurationProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SessionConfigurationProxy.m; sourceTree = "<group>"; };
 		AA747D9E0F9514B9006C5449 /* ComAppceleratorUrlSession_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComAppceleratorUrlSession_Prefix.pch; sourceTree = SOURCE_ROOT; };
 		AACBBE490F95108600F1A2B1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D2AAC07E0554694100DB518D /* libComAppceleratorUrlSession.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libComAppceleratorUrlSession.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		DB19DF7B1DC7D01500FEA769 /* ComAppceleratorUrlSessionSessionConfigurationProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ComAppceleratorUrlSessionSessionConfigurationProxy.h; path = Classes/ComAppceleratorUrlSessionSessionConfigurationProxy.h; sourceTree = "<group>"; };
+		DB19DF7C1DC7D01500FEA769 /* ComAppceleratorUrlSessionSessionConfigurationProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ComAppceleratorUrlSessionSessionConfigurationProxy.m; path = Classes/ComAppceleratorUrlSessionSessionConfigurationProxy.m; sourceTree = "<group>"; };
+		DB19DF7D1DC7D01500FEA769 /* ComAppceleratorUrlSessionSessionProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ComAppceleratorUrlSessionSessionProxy.h; path = Classes/ComAppceleratorUrlSessionSessionProxy.h; sourceTree = "<group>"; };
+		DB19DF7E1DC7D01500FEA769 /* ComAppceleratorUrlSessionSessionProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ComAppceleratorUrlSessionSessionProxy.m; path = Classes/ComAppceleratorUrlSessionSessionProxy.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,10 +105,10 @@
 				24DE9E1011C5FE74003F90F6 /* ComAppceleratorUrlSessionModuleAssets.m */,
 				24DD6CF71134B3F500162E58 /* ComAppceleratorUrlSessionModule.h */,
 				24DD6CF81134B3F500162E58 /* ComAppceleratorUrlSessionModule.m */,
-				3AE6391D1BDEAA9100A3796A /* SessionConfigurationProxy.h */,
-				3AE6391E1BDEAA9100A3796A /* SessionConfigurationProxy.m */,
-				3AE639191BDEAA4600A3796A /* SessionProxy.h */,
-				3AE6391A1BDEAA4600A3796A /* SessionProxy.m */,
+				DB19DF7B1DC7D01500FEA769 /* ComAppceleratorUrlSessionSessionConfigurationProxy.h */,
+				DB19DF7C1DC7D01500FEA769 /* ComAppceleratorUrlSessionSessionConfigurationProxy.m */,
+				DB19DF7D1DC7D01500FEA769 /* ComAppceleratorUrlSessionSessionProxy.h */,
+				DB19DF7E1DC7D01500FEA769 /* ComAppceleratorUrlSessionSessionProxy.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -129,11 +129,11 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DB19DF7F1DC7D01500FEA769 /* ComAppceleratorUrlSessionSessionConfigurationProxy.h in Headers */,
 				AA747D9F0F9514B9006C5449 /* ComAppceleratorUrlSession_Prefix.pch in Headers */,
-				3AE6391F1BDEAA9100A3796A /* SessionConfigurationProxy.h in Headers */,
 				24DD6CF91134B3F500162E58 /* ComAppceleratorUrlSessionModule.h in Headers */,
-				3AE6391B1BDEAA4600A3796A /* SessionProxy.h in Headers */,
 				24DE9E1111C5FE74003F90F6 /* ComAppceleratorUrlSessionModuleAssets.h in Headers */,
+				DB19DF811DC7D01500FEA769 /* ComAppceleratorUrlSessionSessionProxy.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -207,9 +207,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3AE639201BDEAA9100A3796A /* SessionConfigurationProxy.m in Sources */,
+				DB19DF821DC7D01500FEA769 /* ComAppceleratorUrlSessionSessionProxy.m in Sources */,
 				24DD6CFA1134B3F500162E58 /* ComAppceleratorUrlSessionModule.m in Sources */,
-				3AE6391C1BDEAA4600A3796A /* SessionProxy.m in Sources */,
+				DB19DF801DC7D01500FEA769 /* ComAppceleratorUrlSessionSessionConfigurationProxy.m in Sources */,
 				24DE9E1211C5FE74003F90F6 /* ComAppceleratorUrlSessionModuleAssets.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
