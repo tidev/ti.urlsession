@@ -17,7 +17,7 @@
 
 - (id)createURLSession:(id)args; // Deprecated in 2.1.0: Use "createSession" instead.
 
-- (id)backgroundDownloadTaskWithURL:(id)args; // Deprecated in 2.1.0: Use "addBackgroundDownloadTask" instead.
+- (id)backgroundDownloadTaskWithURL:(id)args; // Deprecated in 2.1.0: Use "Session.downloadTask" instead.
 
 - (void)finishTasksAndInvalidate:(id)value; // Deprecated in 2.1.0: Use "Session.finishTasksAndInvalidate" instead.
 
