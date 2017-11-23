@@ -12,7 +12,7 @@ description: |
     [iOS Background Services guide](http://docs.appcelerator.com/titanium/latest/#!/guide/iOS_Background_Services).
 
 extends: Titanium.Module
-osver: {ios: {min: "7.0"}}
+osver: {ios: {min: "7.0.0"}}
 platforms: [iphone, ipad]
 since: 6.1.0
 
@@ -32,21 +32,21 @@ methods:
         Session objects cannot be reused. To allow outstanding tasks to run until 
         completion, call `finishTasksAndInvalidate` instead.
          
- - name: downloadTask
-   summary: |
-       Creates a download task for the specified URL, within the provided session 
-       object and saves the results to a file.
-   description: |
-       Once this function is called, the download starts automatically. The progress 
-       of the download can be monitored by listening to the `downloadprogress`, 
-       `downloadcompleted`, `sessioneventscompleted` and `sessioncompleted` events.
-   parameters:
-     - name: args
-       summary: An object representing the arguments to add a new background task.
-       type: DownloadTaskType
-   returns:
-       summary: Task's identifier number.
-       type: String    
+  - name: downloadTask
+    summary: |
+        Creates a download task for the specified URL, within the provided session 
+        object and saves the results to a file.
+    description: |
+        Once this function is called, the download starts automatically. The progress 
+        of the download can be monitored by listening to the `downloadprogress`, 
+        `downloadcompleted`, `sessioneventscompleted` and `sessioncompleted` events.
+    parameters:
+      - name: args
+        summary: An object representing the arguments to add a new background task.
+        type: DownloadTaskType
+    returns:
+        summary: Task's identifier number.
+        type: String    
  
   - name: uploadTask
     summary: |
@@ -93,7 +93,7 @@ properties:
         cache or credentials.
      
         A background session can be used to perform networking operations
-       on behalf of a suspended application, within certain constraints.
+        on behalf of a suspended application, within certain constraints.
     optional: false
     availability: creation
     type: Modules.URLSession.SessionConfiguration

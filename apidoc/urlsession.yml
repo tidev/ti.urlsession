@@ -27,7 +27,7 @@ description: |
 
 extends: Titanium.Module
 since: "3.2.0"
-osver: {ios: {min: "7.0"}}
+osver: {ios: {min: "7.0.0"}}
 platforms: [iphone, ipad]
 excludes:
     methods: [addEventListener, fireEvent, removeEventListener]
@@ -100,7 +100,7 @@ properties:
         cache or credentials.
      
         A background session can be used to perform networking operations
-       on behalf of a suspended application, within certain constraints.
+        on behalf of a suspended application, within certain constraints.
     optional: false
     availability: creation
     type: Modules.URLSession.SessionConfiguration
