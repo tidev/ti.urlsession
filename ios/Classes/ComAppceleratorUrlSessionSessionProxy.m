@@ -75,7 +75,7 @@
         } else if ([data isMemberOfClass:[TiBlob class]]) {
             task = [_session uploadTaskWithRequest:request fromData:[data data]];
         } else {
-            NSLog(@"[ERROR] Ti.URLSession: The specified data for background upload task is incorrect. Please provide a file path or a blob.");
+            NSLog(@"[ERROR] Ti.URLSession: The specified data for upload task is incorrect. Please provide a file path or a blob.");
             return [NSNull null];
         }
         
@@ -83,7 +83,7 @@
         
         return NUMINTEGER([task taskIdentifier]);
     } else {
-        NSLog(@"[ERROR] Ti.URLSession: The specified URL for this background upload task is empty. Please provide a valid URL.");
+        NSLog(@"[ERROR] Ti.URLSession: The specified URL for this upload task is empty. Please provide a valid URL.");
     }
     
     return nil;
@@ -91,20 +91,72 @@
 
 - (id)downloadTask:(id)args
 {
-    ENSURE_SINGLE_ARG(args, NSDictionary);
+  ENSURE_SINGLE_ARG(args, NSDictionary);
+  
+  NSString *url = [TiUtils stringValue:@"url" properties:args];
+  
+  if ([url length]) {
+    NSURLSessionDownloadTask *task = [_session downloadTaskWithURL:[NSURL URLWithString:url]];
+    [task resume];
     
-    NSString *url = [TiUtils stringValue:@"url" properties:args];
+    return NUMINTEGER([task taskIdentifier]);
+  } else {
+    NSLog(@"[ERROR] Ti.URLSession: The specified url for download task is empty. Please provide a proper url.");
+  }
+  
+  return nil;
+}
+
+
+- (id)dataTask:(id)args
+{
+  ENSURE_SINGLE_ARG(args, NSDictionary);
+  
+  NSURLSessionUploadTask *task = nil;
+  NSString *url = nil;
+  NSString *method = nil;
+  NSDictionary *headers = nil;
+  id data = [args objectForKey:@"data"];;
+  
+  ENSURE_ARG_FOR_KEY(url, args, @"url", NSString);
+  ENSURE_ARG_OR_NIL_FOR_KEY(method, args, @"method", NSString);
+  ENSURE_ARG_OR_NIL_FOR_KEY(headers, args, @"requestHeaders", NSDictionary);
+  
+  if ([url length] != 0) {
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[TiUtils toURL:url proxy:self]];
     
-    if ([url length]) {
-        NSURLSessionDownloadTask *task = [_session downloadTaskWithURL:[NSURL URLWithString:url]];
-        [task resume];
+    // HTTP method
+    [request setHTTPMethod:(method ?: @"POST")];
+    
+    // Optional request headers
+    if (headers) {
+      for (id key in headers) {
+        ENSURE_TYPE(key, NSString);
+        ENSURE_TYPE([headers objectForKey:key], NSString);
         
-        return NUMINTEGER([task taskIdentifier]);
-    } else {
-        NSLog(@"[ERROR] Ti.URLSession: The specified url for background download task is empty. Please provide a proper url.");
+        [request setValue:[headers objectForKey:key] forHTTPHeaderField:key];
+      }
     }
     
-    return nil;
+    if (data != nil) {
+      NSError *error = nil;
+      NSData *postData = [NSJSONSerialization dataWithJSONObject:data options:0 error:&error];
+      
+      if (error == nil) {
+        [request setHTTPBody:postData];
+      } else {
+        DebugLog(@"[ERROR] Could not append data: %@", error.localizedDescription);
+      }
+    }
+
+    NSURLSessionDataTask *task = [_session dataTaskWithRequest:request];
+    
+    return NUMINTEGER([task taskIdentifier]);
+  } else {
+    NSLog(@"[ERROR] Ti.URLSession: The specified URL for this data task is empty. Please provide a valid URL.");
+  }
+  
+  return nil;
 }
 
 - (void)finishTasksAndInvalidate:(id)unused
