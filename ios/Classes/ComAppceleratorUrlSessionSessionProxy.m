@@ -47,7 +47,7 @@
     NSString *method = nil;
     NSURL *fileURL = nil;
     NSDictionary *headers = nil;
-    id data = [args objectForKey:@"data"];;
+    id data = [args objectForKey:@"data"];
     
     ENSURE_ARG_FOR_KEY(url, args, @"url", NSString);
     ENSURE_ARG_OR_NIL_FOR_KEY(method, args, @"method", NSString);
@@ -116,7 +116,7 @@
   NSString *url = nil;
   NSString *method = nil;
   NSDictionary *headers = nil;
-  id data = [args objectForKey:@"data"];;
+  id data = [args objectForKey:@"data"];
   
   ENSURE_ARG_FOR_KEY(url, args, @"url", NSString);
   ENSURE_ARG_OR_NIL_FOR_KEY(method, args, @"method", NSString);
