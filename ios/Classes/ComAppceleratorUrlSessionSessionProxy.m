@@ -112,7 +112,6 @@
 {
   ENSURE_SINGLE_ARG(args, NSDictionary);
   
-  NSURLSessionUploadTask *task = nil;
   NSString *url = nil;
   NSString *method = nil;
   NSDictionary *headers = nil;
@@ -122,41 +121,43 @@
   ENSURE_ARG_OR_NIL_FOR_KEY(method, args, @"method", NSString);
   ENSURE_ARG_OR_NIL_FOR_KEY(headers, args, @"requestHeaders", NSDictionary);
   
-  if ([url length] != 0) {
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[TiUtils toURL:url proxy:self]];
-    
-    // HTTP method
-    [request setHTTPMethod:(method ?: @"POST")];
-    
-    // Optional request headers
-    if (headers) {
-      for (id key in headers) {
-        ENSURE_TYPE(key, NSString);
-        ENSURE_TYPE([headers objectForKey:key], NSString);
-        
-        [request setValue:[headers objectForKey:key] forHTTPHeaderField:key];
-      }
-    }
-    
-    if (data != nil) {
-      NSError *error = nil;
-      NSData *postData = [NSJSONSerialization dataWithJSONObject:data options:0 error:&error];
-      
-      if (error == nil) {
-        [request setHTTPBody:postData];
-      } else {
-        DebugLog(@"[ERROR] Could not append data: %@", error.localizedDescription);
-      }
-    }
+  NSURL *nativeURL = [TiUtils toURL:url proxy:self];
 
-    NSURLSessionDataTask *task = [_session dataTaskWithRequest:request];
-    
-    return NUMINTEGER([task taskIdentifier]);
-  } else {
+  if (nativeURL == nil) {
     NSLog(@"[ERROR] Ti.URLSession: The specified URL for this data task is empty. Please provide a valid URL.");
+    return nil;
+  }
+
+  NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:nativeURL];
+  
+  // HTTP method
+  [request setHTTPMethod:(method ?: @"POST")];
+  
+  // Optional request headers
+  if (headers) {
+    for (id key in headers) {
+      ENSURE_TYPE(key, NSString);
+      ENSURE_TYPE([headers objectForKey:key], NSString);
+      
+      [request setValue:[headers objectForKey:key] forHTTPHeaderField:key];
+    }
   }
   
-  return nil;
+  if (data != nil) {
+    NSError *error = nil;
+    NSData *postData = [NSJSONSerialization dataWithJSONObject:data options:0 error:&error];
+    
+    if (error == nil) {
+      [request setHTTPBody:postData];
+    } else {
+      DebugLog(@"[ERROR] Could not append data: %@", error.localizedDescription);
+    }
+  }
+
+  NSURLSessionDataTask *task = [_session dataTaskWithRequest:request];
+  [task resume];
+  
+  return NUMINTEGER([task taskIdentifier]);
 }
 
 - (void)finishTasksAndInvalidate:(id)unused

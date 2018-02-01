@@ -59,7 +59,27 @@ methods:
     parameters:
       - name: args
         summary: An object representing the arguments to add a new upload task.
-        type: UploadTaskType
+        type: UploadDataTaskType
+    returns:
+        summary: Task's identifier number.
+        type: String 
+ 
+  - name: dataTask
+    summary: |
+        Creates a data task for the specified URL, within the provided session 
+        object and local data.
+    description: |
+        An data task does not provide any additional functionality over a usual
+        session task and its presence is merely to provide lexical differentiation 
+        from download and upload tasks.
+        
+        Once this function is called, the task starts automatically. Once finished,
+        the data task will call the `sessioncompleted` event containing infos about
+        the response.
+    parameters:
+      - name: args
+        summary: An object representing the arguments to add a new task task.
+        type: UploadDataTaskType
     returns:
         summary: Task's identifier number.
         type: String          
@@ -107,7 +127,7 @@ properties:
     type: String
 
 ---
-name: UploadTaskType
+name: UploadDataTaskType
 summary: The parameter for [uploadTask](Modules.URLSession.Session.uploadTask) method.
 properties:
   - name: url
