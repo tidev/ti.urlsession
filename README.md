@@ -2,7 +2,7 @@
 
 ## Description
 
-Creates a lightweight wrapper around `NSURLSession` for working with the Backgrounding Feature in iOS 7 and later.
+Creates a lightweight wrapper around `NSURLSession` for working with the Backgrounding Features.
 
 ## Accessing the urlSession Module
 
@@ -196,15 +196,11 @@ The following event information will be provided:
 
 ## Usage
 
-See Sample
+See the full features [example](https://github.com/appcelerator-modules/ti.urlsession/blob/master/ios/example/app.js).
 
 ## Author
 
 Hans Knoechel / Sabil Rahim
-
-## Module History
-
-View the [ChangeLog](changelog.html) for this module.
 
 ## Feedback and Support
 
