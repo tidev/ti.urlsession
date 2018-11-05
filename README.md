@@ -159,7 +159,7 @@ Ti.App.iOS.addEventListener('downloadcompleted', function(e) {
 The following event information will be provided:
 
 taskIdentifier[int]: The task identifier number for the download task that finished.
-data[TiBlob](http://docs.appcelerator.com/titanium/latest/#!/api/Titanium.Blob) : The downloaded content as [blob](http://docs.appcelerator.com/titanium/latest/#!/api/Titanium.Blob) object
+data[TiBlob](http://docs.appcelerator.com/platform/latest/#!/api/Titanium.Blob) : The downloaded content as [blob](http://docs.appcelerator.com/platform/latest/#!/api/Titanium.Blob) object
 
 ### sessioneventscompleted
 
