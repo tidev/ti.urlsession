@@ -9,7 +9,7 @@ description: |
     your app the ability to perform background downloads when your app is not running or, in iOS, 
     while your app is suspended.
 
-    [iOS Background Services guide](http://docs.appcelerator.com/titanium/latest/#!/guide/iOS_Background_Services).
+    [iOS Background Services guide](http://docs.appcelerator.com/platform/latest/#!/guide/iOS_Background_Services).
 
 extends: Titanium.Module
 osver: {ios: {min: "7.0.0"}}
