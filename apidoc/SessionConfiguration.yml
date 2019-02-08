@@ -11,7 +11,7 @@ description: |
     policies, connection requirements, and other types of information that you 
     intend to use with your URLSession object.
 
-    [iOS Background Services guide](http://docs.appcelerator.com/titanium/latest/#!/guide/iOS_Background_Services).
+    [iOS Background Services guide](http://docs.appcelerator.com/platform/latest/#!/guide/iOS_Background_Services).
 
 extends: Titanium.Module
 osver: {ios: {min: "7.0.0"}}
