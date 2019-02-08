@@ -23,7 +23,7 @@ description: |
     Titanium.App.iOS namespace.  
 
     For more information on getting started, refer to the
-    [iOS Background Services guide](http://docs.appcelerator.com/titanium/latest/#!/guide/iOS_Background_Services).
+    [iOS Background Services guide](http://docs.appcelerator.com/platform/latest/#!/guide/iOS_Background_Services).
 
 extends: Titanium.Module
 since: "3.2.0"
