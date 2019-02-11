@@ -20,7 +20,7 @@ description: |
       * <Titanium.App.iOS.sessioneventscompleted>
 
     These events are monitored as application-level events by using the `addEventListener` method with the
-    Titanium.App.iOS namespace.  
+    Titanium.App.iOS namespace.
 
     For more information on getting started, refer to the
     [iOS Background Services guide](http://docs.appcelerator.com/platform/latest/#!/guide/iOS_Background_Services).
@@ -83,7 +83,7 @@ methods:
         type: String
     returns:
         summary: Task's identifier number.
-        type: String    
+        type: String
  
 properties:
   - name: configuration
@@ -92,13 +92,13 @@ properties:
         Configuration options for an <Modules.URLSession.Session> object.  
         When a session is created, a copy of the configuration object is made.
         you cannot modify the configuration of a session after it has been created.
-     
+
         The shared session uses the global singleton credential, cache
         and cookie storage objects.
-     
+
         An ephemeral session has no persistent disk storage for cookies,
         cache or credentials.
-     
+
         A background session can be used to perform networking operations
         on behalf of a suspended application, within certain constraints.
     optional: false
