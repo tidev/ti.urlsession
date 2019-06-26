@@ -46,8 +46,8 @@ methods:
         summary: URL session object.
         type: Object
     deprecated:
-        since: 6.1.0
-        notes: Use <Modules.URLSession.Session.finishTasksAndInvalidate> (on the session object) instead.
+        since: "6.1.0"
+        notes: Use [Modules.URLSession.Session.finishTasksAndInvalidate](Modules.URLSession.Session.finishTasksAndInvalidate) (on the session object) instead.
 
   - name: invalidateAndCancel
     summary: Cancels all outstanding tasks and then invalidates the session object.
@@ -60,13 +60,13 @@ methods:
         summary: URL session object.
         type: Object
     deprecated:
-        since: 6.1.0
-        notes: Use <Modules.URLSession.Session.invalidateAndCancel> (on the session object) instead.
+        since: "6.1.0"
+        notes: Use [Modules.URLSession.Session.invalidateAndCancel](Modules.URLSession.Session.invalidateAndCancel) (on the session object) instead.
 
   - name: backgroundDownloadTaskWithURL
     deprecated:
-        since: 6.1.0
-        notes: Use <Modules.URLSession.Session.downloadTask> on the session directly.
+        since: "6.1.0"
+        notes: Use [Modules.URLSession.Session.downloadTask](Modules.URLSession.Session.downloadTask) on the session directly.
     summary: |
         Creates a download task for the specified URL, within the provided session object and saves the
         results to a file.
