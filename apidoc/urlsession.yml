@@ -2,29 +2,29 @@
 name: Modules.URLSession
 summary: Wrapper to support iOS's NSURLSession class for background downloads.
 description: |
-  These APIs are supported on iOS 7 and later.
+    These APIs are supported on iOS 7 and later.
 
-  The URL session module (`com.appcelerator.urlSession`) provides the application
-  the ability to download large content via HTTP while the application is in the
-  background. With this module, you can
+    The URL session module (`com.appcelerator.urlSession`) provides the application
+    the ability to download large content via HTTP while the application is in the
+    background. With this module, you can
 
-    1. Create a URL session and a background download task.
-    2. Monitor events to check the progress of the download and session.
-    3. Cancel downloads and invalidate sessions.
+      1. Create a URL session and a background download task.
+      2. Monitor events to check the progress of the download and session.
+      3. Cancel downloads and invalidate sessions.
 
-  URL session events are monitored through the following iOS application-level events:
+    URL session events are monitored through the following iOS application-level events:
 
-    * <Titanium.App.iOS.backgroundtransfer>
-    * <Titanium.App.iOS.downloadprogress>
-    * <Titanium.App.iOS.downloadcompleted>
-    * <Titanium.App.iOS.sessioncompleted>
-    * <Titanium.App.iOS.sessioneventscompleted>
+      * <Titanium.App.iOS.backgroundtransfer>
+      * <Titanium.App.iOS.downloadprogress>
+      * <Titanium.App.iOS.downloadcompleted>
+      * <Titanium.App.iOS.sessioncompleted>
+      * <Titanium.App.iOS.sessioneventscompleted>
 
-  These events are monitored as application-level events by using the
-  `addEventListener` method with the Titanium.App.iOS namespace.
+    These events are monitored as application-level events by using the
+    `addEventListener` method with the Titanium.App.iOS namespace.
 
-  For more information on getting started, refer to the
-  [iOS Background Services guide](http://docs.appcelerator.com/titanium/latest/#!/guide/iOS_Background_Services).
+    For more information on getting started, refer to the
+    [iOS Background Services guide](http://docs.appcelerator.com/titanium/latest/#!/guide/iOS_Background_Services).
 
 extends: Titanium.Module
 since: "3.2.0"
@@ -47,8 +47,8 @@ methods:
         summary: URL session object.
         type: Object
     deprecated:
-        since: "6.1.0"
-        notes: Use [Modules.URLSession.Session.finishTasksAndInvalidate](Modules.URLSession.Session.finishTasksAndInvalidate) (on the session object) instead.
+      since: 6.1.0
+      notes: Use [Modules.URLSession.Session.finishTasksAndInvalidate](Modules.URLSession.Session.finishTasksAndInvalidate) (on the session object) instead.
 
   - name: invalidateAndCancel
     summary: Cancels all outstanding tasks and then invalidates the session object.
@@ -61,13 +61,13 @@ methods:
         summary: URL session object.
         type: Object
     deprecated:
-        since: "6.1.0"
-        notes: Use [Modules.URLSession.Session.invalidateAndCancel](Modules.URLSession.Session.invalidateAndCancel) (on the session object) instead.
+      since: 6.1.0
+      notes: Use [Modules.URLSession.Session.invalidateAndCancel](Modules.URLSession.Session.invalidateAndCancel) (on the session object) instead.
 
   - name: backgroundDownloadTaskWithURL
     deprecated:
-        since: "6.1.0"
-        notes: Use [Modules.URLSession.Session.downloadTask](Modules.URLSession.Session.downloadTask) on the session directly.
+      since: 6.1.0
+      notes: Use [Modules.URLSession.Session.downloadTask](Modules.URLSession.Session.downloadTask) on the session directly.
     summary: |
       Creates a download task for the specified URL, within the provided session object and saves the
       results to a file.
