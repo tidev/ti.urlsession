@@ -2,13 +2,15 @@
 
 ## Description
 
-Creates a lightweight wrapper around `NSURLSession` for working with the Backgrounding Feature in iOS 7 and later.
+Creates a lightweight wrapper around `NSURLSession` for working with the Backgrounding Features.
 
 ## Accessing the urlSession Module
 
 To access this module from JavaScript, you would do the following:
 
-	var URLSession = require('com.appcelerator.urlSession');
+```js
+var URLSession = require('com.appcelerator.urlSession');
+```
 
 The `URLSession` variable is a reference to the Module object.
 
@@ -53,7 +55,7 @@ or finishTasksAndInvalidate() method, your app leaks memory.
 
 ### Methods
 
-#### backgroundTask(arguments)
+#### downloadTask(arguments)
 
 Creates a download task for the specified URL, within the provided session object and saves the results to a file.
 Once this function is called, the download starts automatically. The progress of the download can be monitored by listening 
@@ -69,12 +71,29 @@ Once this function is called, the upload starts automatically. The progress of t
 to `uploadprogress` and `sessioncompleted` events explained below.
 
 * Takes an object of arguments:
+  * url (String): The remote url used for this upload task.
+  * data (TiBlob): The data blob used for this upload task.
+  * method (String): The request method (e.g. POST or PUT). Default: POST.
+  * requestHeaders (Array<String: String>): Additional request headers to pass to the request.
+
+Returns the new created task's identifier number.
+
+#### dataTask(arguments)
+
+Creates a data task for the specified URL, within the provided session object and local data.
+An data task does not provide any additional functionality over a usual session task and its 
+presence is merely to provide lexical differentiation from download and upload tasks.
+        
+Once this function is called, the task starts automatically. Once finished, the data task will call 
+the `sessioncompleted` event containing infos about the response.
+
+* Takes an object of arguments:
   * url (String): The remote url used for this data task.
   * data (TiBlob): The data blob used for this data task.
   * method (String): The request method (e.g. POST or PUT). Default: POST.
   * requestHeaders (Array<String: String>): Additional request headers to pass to the request.
 
-Returns the new created task's identifier number. 
+Returns the new created task's identifier number.
 
 #### finishTasksAndInvalidate()
 
@@ -140,7 +159,7 @@ Ti.App.iOS.addEventListener('downloadcompleted', function(e) {
 The following event information will be provided:
 
 taskIdentifier[int]: The task identifier number for the download task that finished.
-data[TiBlob](http://docs.appcelerator.com/titanium/latest/#!/api/Titanium.Blob) : The downloaded content as [blob](http://docs.appcelerator.com/titanium/latest/#!/api/Titanium.Blob) object
+data[TiBlob](http://docs.appcelerator.com/platform/latest/#!/api/Titanium.Blob) : The downloaded content as [blob](http://docs.appcelerator.com/platform/latest/#!/api/Titanium.Blob) object
 
 ### sessioneventscompleted
 
@@ -177,19 +196,15 @@ The following event information will be provided:
 
 ## Usage
 
-See Sample
+See the full features [example](https://github.com/appcelerator-modules/ti.urlsession/blob/master/ios/example/app.js).
 
 ## Author
 
 Hans Knoechel / Sabil Rahim
 
-## Module History
-
-View the [change log](changelog.html) for this module.
-
 ## Feedback and Support
 
-Please direct all questions, feedback, and concerns to [info@appcelerator.com](mailto:info@appcelerator.com?subject=iOS%20urlSesson%20Module). 
+Please direct all questions, feedback, and concerns to [info@appcelerator.com](mailto:info@appcelerator.com?subject=iOS%20urlSesson%20Module) or ask the community on [TiSlack](http://tislack.org). 
 
 ## License
 Copyright (c) 2010-Present by Axway Appcelerator. All Rights Reserved. Please see the LICENSE
