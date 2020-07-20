@@ -108,6 +108,48 @@
   return nil;
 }
 
+- (id)downloadTaskWithRequest:(id)args
+{
+  ENSURE_SINGLE_ARG(args, NSDictionary);
+  
+    NSString *url = nil;
+    NSString *method = nil;
+    NSDictionary *headers = nil;
+    id data = [args objectForKey:@"data"];
+    
+    ENSURE_ARG_FOR_KEY(url, args, @"url", NSString);
+    ENSURE_ARG_OR_NIL_FOR_KEY(method, args, @"method", NSString);
+    ENSURE_ARG_OR_NIL_FOR_KEY(headers, args, @"requestHeaders", NSDictionary);
+    
+  NSURL *nativeURL = [TiUtils toURL:url proxy:self];
+
+  if (nativeURL == nil) {
+    NSLog(@"[ERROR] Ti.URLSession: The specified URL for this download task is empty. Please provide a valid URL.");
+    return nil;
+  }
+    
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:nativeURL];
+    
+    // HTTP method
+    [request setHTTPMethod:(method ?: @"POST")];
+    
+    if (data != nil) {
+      NSError *error = nil;
+      NSData *postData = [NSJSONSerialization dataWithJSONObject:data options:0 error:&error];
+      
+      if (error == nil) {
+        [request setHTTPBody:postData];
+      } else {
+        DebugLog(@"[ERROR] Could not append data: %@", error.localizedDescription);
+      }
+    }
+  
+    NSURLSessionDownloadTask *task = [_session downloadTaskWithRequest:request];
+    [task resume];
+    
+  return NUMINTEGER([task taskIdentifier]);
+}
+
 - (id)dataTask:(id)args
 {
   ENSURE_SINGLE_ARG(args, NSDictionary);
