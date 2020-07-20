@@ -65,7 +65,7 @@ to `downloadprogress` , `downloadcompleted`, `sessioneventscompleted` and `sessi
   * url (String): The remote url used for this data task.
 
 
-#### downloadTaskWithWithRequest(arguments)
+#### downloadTaskWithRequest(arguments)
 Creates a download task for the specified URL, within the provided session object and saves the results to a file.
 This method extends the downloadTask function to allow data to be downloaded as part of a POST request.
 Once this function is called, the download starts automatically. The progress of the download can be monitored by listening 
