@@ -2,7 +2,7 @@
 # this is your module manifest and used by Titanium
 # during compilation, packaging, distribution, etc.
 #
-version: 2.2.0
+version: 3.0.0
 apiversion: 2
 architectures: armv7 arm64 i386 x86_64
 description: ti.urlsession
@@ -15,4 +15,4 @@ name: ti.urlsession
 moduleid: com.appcelerator.urlSession
 guid: 276644d1-41e7-4c67-88a3-55d4fbfa0f24
 platform: iphone
-minsdk: 5.0.0
+minsdk: 9.2.0

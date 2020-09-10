@@ -6,6 +6,7 @@
  */
 
 #import "ComAppceleratorUrlSessionSessionProxy.h"
+#import "TiBlob.h"
 
 @implementation ComAppceleratorUrlSessionSessionProxy
 
