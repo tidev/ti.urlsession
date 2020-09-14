@@ -5,13 +5,14 @@
  * Please see the LICENSE included with this distribution for details.
  */
 
-#import "TiModule.h"
-#import "ComAppceleratorUrlSessionSessionProxy.h"
 #import "ComAppceleratorUrlSessionSessionConfigurationProxy.h"
-#import <UIKit/UIKit.h>
+#import "ComAppceleratorUrlSessionSessionProxy.h"
+#import "TiModule.h"
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
-@interface ComAppceleratorUrlSessionModule : TiModule {}
+@interface ComAppceleratorUrlSessionModule : TiModule {
+}
 
 - (id)createURLSessionBackgroundConfiguration:(id)args; // Deprecated in 2.1.0: Use "createSessionConfiguration" instead.
 

@@ -4,20 +4,20 @@
  * Licensed under the terms of the Apache Public License
  * Please see the LICENSE included with this distribution for details.
  */
-#import "TiProxy.h"
-#import "TiModule.h"
 #import "ComAppceleratorUrlSessionSessionConfigurationProxy.h"
+#import "TiModule.h"
+#import "TiProxy.h"
 
 @interface ComAppceleratorUrlSessionSessionProxy : TiProxy {
-@private
-    ComAppceleratorUrlSessionSessionConfigurationProxy *sessionConfiguration;
+  @private
+  ComAppceleratorUrlSessionSessionConfigurationProxy *sessionConfiguration;
 }
 
 #pragma mark Proxy Handling
 
-@property(nonatomic, strong) NSURLSession *session;
+@property (nonatomic, strong) NSURLSession *session;
 
-- (id)_initWithPageContext:(id<TiEvaluator>)context andArguments:(NSDictionary*)args;
+- (id)_initWithPageContext:(id<TiEvaluator>)context andArguments:(NSDictionary *)args;
 
 #pragma mark Public API's
 
