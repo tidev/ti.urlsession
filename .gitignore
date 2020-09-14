@@ -24,3 +24,5 @@ xcuserdata
 libs/
 
 node_modules/
+
+TESTS-*.xml
