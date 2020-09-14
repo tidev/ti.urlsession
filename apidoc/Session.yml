@@ -89,14 +89,14 @@ methods:
     parameters:
       - name: callback
         summary: Callback to be invoked when the reset completes.
-        type: Callback
+        type: Callback<CompletedCallback>
 
   - name: flush
     summary: Flushes storage to disk and clear transient network caches.
     parameters:
       - name: callback
         summary: Callback to be invoked when the reset completes.
-        type: Callback
+        type: Callback<CompletedCallback>
 
 properties:
   - name: configuration
@@ -148,3 +148,12 @@ properties:
   - name: requestHeaders
     summary: Additional request headers to pass to the request.
     type: String
+
+---
+name: CompletedCallback
+summary: Simple object passed to callback functions for <Modules.URLSession.Session.reset> and <Modules.URLSession.Session.flush>
+properties:
+  - name: completed
+    summary: Whetehr request is completed (always `true`)
+    type: Boolean
+    value: 'true'

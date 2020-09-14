@@ -27,5 +27,5 @@ properties:
      availability: creation
      type: String
    - name: HTTPHeaderFields
-     type: <Array>
-     summary: Specifies additional headers which will be set on outgoing requests.
+     type: Object
+     summary: Specifies additional headers which will be set on outgoing requests. Keys and values must be Strings.
