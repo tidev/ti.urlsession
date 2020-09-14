@@ -22,3 +22,5 @@ xcuserdata
 
 .idea/
 libs/
+
+node_modules/
