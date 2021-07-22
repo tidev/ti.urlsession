@@ -1,6 +1,6 @@
 {
   "name": "@titanium-sdk/ti.urlsession",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "description": "Creates a lightweight wrapper around `NSURLSession` for working with the Backgrounding Features.",
   "scripts": {
     "commit": "git-cz",
