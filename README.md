@@ -64,6 +64,20 @@ to `downloadprogress` , `downloadcompleted`, `sessioneventscompleted` and `sessi
 * Takes an object of one argument:
   * url (String): The remote url used for this data task.
 
+
+#### downloadTaskWithRequest(arguments)
+Creates a download task for the specified URL, within the provided session object and saves the results to a file.
+This method extends the downloadTask function to allow data to be downloaded as part of a POST request.
+Once this function is called, the download starts automatically. The progress of the download can be monitored by listening 
+to `downloadprogress` , `downloadcompleted`, `sessioneventscompleted` and `sessioncompleted` events explained below.
+
+* Takes an object of arguments:
+  * url (String): The remote url used for this data task.
+  * data (TiBlob): The data blob provided for this download task.
+  * method (String): The request method (e.g. POST or PUT). Default: POST.
+  * requestHeaders (Array<String: String>): Additional request headers to pass to the request.
+
+
 #### uploadTask(arguments)
 
 Creates an upload task for the specified URL, within the provided session object and the file-blob to upload.

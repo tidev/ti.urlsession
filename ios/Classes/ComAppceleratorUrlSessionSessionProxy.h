@@ -25,6 +25,8 @@
 
 - (id)downloadTask:(id)args;
 
+- (id)downloadTaskWithRequest:(id)args;
+
 - (id)dataTask:(id)args;
 
 - (void)finishTasksAndInvalidate:(id)unused;
