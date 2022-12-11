@@ -28,10 +28,10 @@ that is unique for your app. Your app can retrieve the download or the upload re
 new background session with the same identifier. Also, you can set the `HTTPHeaderFields` property to
 specify additional HTTP header-fields.
 
-Returns a preconfigured session configuration object. This variable needs to be passed into the `createURLSession()`
+Returns a preconfigured session configuration object. This variable needs to be passed into the `createSession()`
 function to create a session for background download.
 
-#### createURLSession(sessionConfig)
+#### createSession(sessionConfig)
 
 Creates a session with the specified session configuration. If the session configuration was created 
 with the identifier of a existing session, then this function would return the pre-existing session.
